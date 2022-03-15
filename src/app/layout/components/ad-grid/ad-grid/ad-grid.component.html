@@ -1,0 +1,10 @@
+<div class="container">
+    <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+
+      <div class="col" *ngFor="let ad of adList">
+        <div class="border rounded border-white">
+          <app-ad-grid-item [adDetails]="ad"></app-ad-grid-item>
+        </div>
+      </div>
+    </div>
+  </div>

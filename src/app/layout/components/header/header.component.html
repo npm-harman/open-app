@@ -1,0 +1,43 @@
+<nav class="navbar navbar-light bg-light p-2">
+  <a class="navbar-brand" href="#" [routerLink]="['/general/home/']">
+    <img
+      src="/assets/openApp.png"
+      width="40"
+      height="40"
+      class="d-inline-block align-top"
+      alt=""
+    />
+    OpenApp
+  </a>
+
+  <span class="form-inline">
+    <span class="navbar-text" style="margin-right: 1rem">
+      <a
+        *ngIf="openTab !== 'personal'"
+        href="#"
+        class="btn text-secondary"
+        [routerLink]="['/general/home/']"
+        [queryParams]="{openTab: 'personal'}"
+        >Personal account</a
+      >
+      <a
+      *ngIf="openTab === 'personal'"
+        href="#"
+        class="btn text-secondary"
+        [routerLink]="['/general/business-home/']"
+        [queryParams]="{openTab: 'business'}"
+        >For Businesses</a
+      >
+    </span>
+    <button
+      class="btn btn-sm btn-outline-primary my-2 my-sm-0"
+      style="margin-right: 1rem"
+      type="button"
+    >
+      Sign up
+    </button>
+    <button class="btn btn-sm btn-outline-secondary my-2 my-sm-0" type="button">
+      Sign in
+    </button>
+  </span>
+</nav>

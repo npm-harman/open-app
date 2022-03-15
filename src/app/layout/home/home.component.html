@@ -1,0 +1,41 @@
+<div
+  class="bg-image shadow-1-strong mb-3"
+  style="background-image: url('/assets/homeBack.jpeg'); height: 40vh"
+>
+  <div
+    class="text-black d-flex align-items-center justify-content-center h-100"
+  >
+    <form [formGroup]="searchForm">
+      <div class="row align-items-start">
+        <div class="form-group col-2">
+          <select
+            placeholder="Category"
+            class="form-control form-select"
+            formControlName="category"
+          >
+            <option value="null" selected>Category</option>
+            <option *ngFor="let x of categories" [ngValue]="x">{{ x }}</option>
+          </select>
+        </div>
+        <div class="form-group col-3">
+          <input formControlName="date" class="form-control" type="date" />
+        </div>
+        <div class="form-group col-2">
+          <input formControlName="date" class="form-control" type="time" />
+        </div>
+        <div class="form-group col-3">
+          <input
+            formControlName="location"
+            placeholder="location"
+            class="form-control"
+            type="text"
+          />
+        </div>
+        <div class="form-group col-2">
+          <button class="btn btn btn-danger" type="button">Search</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<app-ad-grid [adList]="adList"></app-ad-grid>
