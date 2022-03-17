@@ -3,11 +3,15 @@ import { CommonModule } from '@angular/common';
 
 import { BusinessHomeRoutingModule } from './business-home-routing.module';
 import { BusinessHomeComponent } from './business-home.component';
+import { BusinessSignupComponent } from './business-signup/business-signup.component';
+import { BusinessSignupFormComponent } from './business-signup/business-signup-form/business-signup-form.component';
 
 
 @NgModule({
   declarations: [
-    BusinessHomeComponent
+    BusinessHomeComponent,
+    BusinessSignupComponent,
+    BusinessSignupFormComponent
   ],
   imports: [
     CommonModule,

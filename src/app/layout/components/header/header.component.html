@@ -17,27 +17,27 @@
         href="#"
         class="btn text-secondary"
         [routerLink]="['/general/home/']"
-        [queryParams]="{openTab: 'personal'}"
-        >Personal account</a
+        [queryParams]="{ openTab: 'personal' }"
+        >For Personal account</a
       >
       <a
-      *ngIf="openTab === 'personal'"
+        *ngIf="openTab === 'personal'"
         href="#"
         class="btn text-secondary"
         [routerLink]="['/general/business-home/']"
-        [queryParams]="{openTab: 'business'}"
+        [queryParams]="{ openTab: 'business' }"
         >For Businesses</a
       >
     </span>
-    <button
+    <a
       class="btn btn-sm btn-outline-primary my-2 my-sm-0"
       style="margin-right: 1rem"
-      type="button"
+      [routerLink]="['/general/business-home/signup']"
     >
       Sign up
-    </button>
-    <button class="btn btn-sm btn-outline-secondary my-2 my-sm-0" type="button">
+    </a>
+    <a class="btn btn-sm btn-outline-secondary my-2 my-sm-0" type="button">
       Sign in
-    </button>
+    </a>
   </span>
 </nav>
