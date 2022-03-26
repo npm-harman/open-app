@@ -1,59 +1,263 @@
 <h3>Connect with us today</h3>
 <br />
-<form>
-  <div class="row mb-3">
-    <div class="form-group col-md-6">
-      <label for="inputEmail4">First Name <em>*</em></label>
-      <input type="text" class="form-control" id="inputEmail4" />
+<form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+  <div *ngIf="step === 1">
+    <div class="row mb-3">
+      <div class="form-group col-md-6">
+        <label for="inputEmail4">First Name <em>*</em></label>
+        <input type="text" class="form-control" id="inputFirstName" formControlName="firstName"/>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="inputPassword4">Last Name<em>*</em></label>
+        <input type="text" class="form-control" id="inputLastName" formControlName="lastName"/>
+      </div>
     </div>
-    <div class="form-group col-md-6">
-      <label for="inputPassword4">Last Name<em>*</em></label>
-      <input type="text" class="form-control" id="inputPassword4" />
+    <div class="row mb-3">
+      <div class="form-group col-md-6">
+        <label for="inputEmail4">Email Address<em>*</em></label>
+        <input type="email" class="form-control" id="inputEmail" formControlName="email" />
+      </div>
+      <div class="form-group col-md-6">
+        <label for="inputPassword4">Business Name<em>*</em></label>
+        <input type="text" class="form-control" id="inputBusinessName" formControlName="businessName" />
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="form-group col-md-6">
+        <label for="inputEmail4">Phone Numer<em>*</em></label>
+        <input type="text" class="form-control" id="inputPhone" formControlName="phone" />
+      </div>
+      <div class="form-group col-md-6">
+        <label for="inputPassword4">Business City<em>*</em></label>
+        <input type="text" class="form-control" id="inputCity" formControlName="city" />
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="form-group col-md-6">
+        <label for="inputEmail4">Business State/Province<em>*</em> </label>
+        <input type="text" class="form-control" id="inputState" formControlName="state" />
+      </div>
+      <div class="form-group col-md-6">
+        <label for="inputPassword4">Business Zip/Postal Code<em>*</em></label>
+        <input type="text" class="form-control" id="inputZipcode" formControlName="zipcode"/>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="form-group col-md-4">
+        <label for="inputState">Business Category<em>*</em></label>
+        <select id="inputCategory" class="form-control" formControlName="category">
+          <option selected>Choose...</option>
+          <option>Auto Shop</option>
+          <option>Beauty Salon</option>
+        </select>
+      </div>
     </div>
   </div>
-  <div class="row mb-3">
-    <div class="form-group col-md-6">
-      <label for="inputEmail4">Email Address<em>*</em></label>
-      <input type="email" class="form-control" id="inputEmail4" />
-    </div>
-    <div class="form-group col-md-6">
-      <label for="inputPassword4">Business Name<em>*</em></label>
-      <input type="text" class="form-control" id="inputPassword4" />
+  <div *ngIf="step === 2">
+    <span for="businessHours">Set Your Business Hours</span>
+    <hr />
+    <div class="col-xs-12" formArrayName="businessHours">
+      <div
+        class="row mb-3"
+        *ngFor="let businessHour of getBusinessHoursControl(); let i = index"
+        [formGroupName]="i"
+      >
+        <div class="form-group col-md-2">
+          <input
+            type="text"
+            class="form-control"
+            id="inputDay"
+            formControlName="day"
+            readonly
+          />
+        </div>
+        <div class="form-group col-md-2">
+          <div class="btn-group" role="group">
+            <input
+              type="radio"
+              formControlName="isWorking"
+              [value]="false"
+              class="btn-check"
+              [id]="'btnradio1' + i"
+              autocomplete="off"
+              (change)="onChangeIsWorking(i)"
+            />
+            <label class="btn btn-outline-primary" [for]="'btnradio1' + i"
+              >Off</label
+            >
+            <input
+              type="radio"
+              formControlName="isWorking"
+              [value]="true"
+              class="btn-check"
+              [id]="'btnradio2' + i"
+              autocomplete="off"
+              (change)="onChangeIsWorking(i)"
+            />
+            <label class="btn btn-outline-primary" [for]="'btnradio2' + i"
+              >On</label
+            >
+          </div>
+        </div>
+        <div class="form-group col-md-3">
+          <input
+            type="time"
+            class="form-control"
+            id="inputStart"
+            formControlName="start"
+          />
+        </div>
+        to
+        <div class="form-group col-md-3">
+          <input
+            type="time"
+            class="form-control"
+            id="inputEnd"
+            formControlName="end"
+          />
+        </div>
+      </div>
     </div>
   </div>
-  <div class="row mb-3">
-    <div class="form-group col-md-6">
-      <label for="inputEmail4">Phone Numer<em>*</em></label>
-      <input type="text" class="form-control" id="inputEmail4" />
-    </div>
-    <div class="form-group col-md-6">
-      <label for="inputPassword4">Business City<em>*</em></label>
-      <input type="text" class="form-control" id="inputPassword4" />
+  <div *ngIf="step === 3">
+    <span class="d-flex justify-content-between">
+      <span>Add your Staff</span>
+      <button
+        type="button"
+        class="btn btn-outline-secondary my-2 my-sm-0 ml-2"
+        (click)="onAddStaffMember()"
+      >
+        &#x2b;
+      </button>
+    </span>
+    <hr />
+    <div class="col-xs-12 y-scroll" formArrayName="staffMembers">
+      <div
+        class="row mb-3"
+        *ngFor="let staffMember of getStaffMembersControl(); let i = index"
+        [formGroupName]="i"
+      >
+        <div class="form-group col-md-4">
+          <input
+            type="text"
+            class="form-control"
+            id="inputName"
+            formControlName="name"
+            placeholder="Name"
+          />
+        </div>
+        <div class="form-group col-md-4">
+          <input
+            type="email"
+            class="form-control"
+            id="inputName"
+            formControlName="email"
+            placeholder="Email"
+          />
+        </div>
+        <div class="form-group col-md-4">
+          <button
+            type="button"
+            class="btn btn-outline-danger my-2 my-sm-0 ml-2 float-right"
+            (click)="onRemoveStaffMember(i)"
+          >
+            &#x2212;
+          </button>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="row mb-3">
-    <div class="form-group col-md-6">
-      <label for="inputEmail4">Business State/Province<em>*</em> </label>
-      <input type="text" class="form-control" id="inputEmail4" />
+  <div *ngIf="step === 4">
+    <span class="d-flex justify-content-between">
+      <span>Add the Services you offer</span>
+      <button
+        type="button"
+        class="btn btn-outline-secondary my-2 my-sm-0 ml-2"
+        (click)="onAddService()"
+      >
+        &#x2b;
+      </button>
+    </span>
+    <hr />
+    <div class="row mb-3">
+      <div class="form-group col-md-4">
+        <label for="inputState">Name</label>
+      </div>
+      <div class="form-group col-md-3">
+        <label for="inputState">Time(mins)</label>
+      </div>
+      <div class="form-group col-md-3">
+        <label for="inputState">Price($)</label>
+      </div>
     </div>
-    <div class="form-group col-md-6">
-      <label for="inputPassword4">Business Zip/Postal Code<em>*</em></label>
-      <input type="text" class="form-control" id="inputPassword4" />
+
+    <div class="col-xs-12 y-scroll" formArrayName="services">
+      <div
+        class="row mb-3"
+        *ngFor="let service of getServicesControl(); let i = index"
+        [formGroupName]="i"
+      >
+        <div class="form-group col-md-4">
+          <input
+            type="text"
+            class="form-control"
+            id="inputName"
+            formControlName="serviceName"
+            placeholder="Name"
+          />
+        </div>
+        <div class="form-group col-md-3">
+          <input
+            type="number"
+            class="form-control"
+            id="inputName"
+            formControlName="time"
+            placeholder="Time (mins)"
+          />
+        </div>
+        <div class="form-group col-md-3">
+          <input
+            type="number"
+            class="form-control"
+            id="inputName"
+            formControlName="price"
+            placeholder="Price ($)"
+          />
+        </div>
+        <div class="form-group col-md-2">
+          <button
+            type="button"
+            class="btn btn-outline-danger my-2 my-sm-0 ml-2"
+            (click)="onRemoveService(i)"
+          >
+            &#x2212;
+          </button>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="row mb-3">
-    <div class="form-group col-md-4">
-      <label for="inputState">Business Category<em>*</em></label>
-      <select id="inputState" class="form-control">
-        <option selected>Choose...</option>
-        <option>Auto Shop</option>
-        <option>Beauty Salon</option>
-      </select>
-    </div>
-  </div>
-  <span class="d-flex justify-content-end">
-    <button type="button" class="btn btn-outline-primary my-2 my-sm-0">
-      Next >
+  <span class="d-flex justify-content-between">
+    <button
+      type="button"
+      class="btn btn-outline-secondary my-2 my-sm-0 ml-2"
+      (click)=" step > 1 && step = step - 1"
+    >
+      &#x3c;
     </button>
+    <button
+      type="button"
+      class="btn btn-outline-primary my-2 my-sm-0 ml-2"
+      (click)="step = step + 1"
+      *ngIf="step !==4"
+    >
+      Next &#x3e;
+    </button>
+    <button
+    type="submit"
+    class="btn btn-outline-primary my-2 my-sm-0 ml-2"
+    *ngIf="step === 4"
+  >
+    Finish
+  </button>
   </span>
 </form>

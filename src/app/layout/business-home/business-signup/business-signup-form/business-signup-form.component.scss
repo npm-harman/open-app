@@ -6,3 +6,9 @@ form{
         }
     }
 }
+
+.y-scroll{
+    max-height: 30vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
