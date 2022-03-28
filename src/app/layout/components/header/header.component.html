@@ -11,33 +11,40 @@
   </a>
 
   <span class="form-inline">
-    <span class="navbar-text" style="margin-right: 1rem">
+    <span
+      class="navbar-text"
+      style="margin-right: 1rem"
+      *ngIf="openTab !== 'personal'"
+    >
       <a
-        *ngIf="openTab !== 'personal'"
         href="#"
         class="btn text-secondary"
         [routerLink]="['/general/home/']"
         [queryParams]="{ openTab: 'personal' }"
-        >For Personal account</a
+        >For Business account</a
       >
+      <button
+        class="btn btn-sm btn-outline-primary my-2 my-sm-0"
+        [routerLink]="['/general/business-home/signup']"
+        [queryParams]="{ openTab: 'business' }"
+      >
+        Sign up
+      </button>
+    </span>
+    <span
+      class="navbar-text"
+      style="margin-right: 1rem"
+      *ngIf="openTab === 'personal'"
+    >
       <a
-        *ngIf="openTab === 'personal'"
         href="#"
         class="btn text-secondary"
-        [routerLink]="['/general/business-home/']"
-        [queryParams]="{ openTab: 'business' }"
-        >For Businesses</a
+        [routerLink]="['/general/home/']"
+        [queryParams]="{ openTab: 'Business' }"
+        >For Personal account</a
       >
+      <app-user-signup-popup></app-user-signup-popup>
     </span>
-    <a
-      class="btn btn-sm btn-outline-primary my-2 my-sm-0"
-      style="margin-right: 1rem"
-      [routerLink]="['/general/business-home/signup']"
-    >
-      Sign up
-    </a>
-    <a class="btn btn-sm btn-outline-secondary my-2 my-sm-0" type="button">
-      Sign in
-    </a>
+    <app-signin-popup></app-signin-popup>
   </span>
 </nav>

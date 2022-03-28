@@ -1,0 +1,52 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Sign in</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="signinForm">
+      <div class="row mb-3">
+        <div class="form-group col-md-12">
+          <label for="inputEmail">Email<em>*</em></label>
+          <input
+            type="email"
+            class="form-control"
+            id="inputEmail"
+            formControlName="email"
+          />
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="form-group col-md-12">
+          <label for="inputPassword">Password<em>*</em></label>
+          <input
+            type="password"
+            class="form-control"
+            id="inputPassword"
+            formControlName="password"
+          />
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-outline-danger"
+          (click)="modal.close('Save click')"
+        >
+          Cancel
+        </button>
+        <button type="submit" class="btn btn-outline-success">Continue</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<button class="btn btn-sm btn-outline-secondary" (click)="open(content)">
+  Sign in
+</button>
