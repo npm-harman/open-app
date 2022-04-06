@@ -6,9 +6,11 @@ import { HomeComponent } from './home.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AdGridComponent } from '../components/ad-grid/ad-grid/ad-grid.component';
 import { AdGridItemComponent } from '../components/ad-grid-item/ad-grid-item/ad-grid-item.component';
+import { AdDetailsComponent } from './ad-details/ad-details.component';
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
-  declarations: [HomeComponent, AdGridComponent, AdGridItemComponent],
-  imports: [CommonModule, HomeRoutingModule, ReactiveFormsModule],
+  declarations: [HomeComponent, AdGridComponent, AdGridItemComponent, AdDetailsComponent],
+  imports: [CommonModule, HomeRoutingModule, ReactiveFormsModule, NgbModule],
 })
 export class HomeModule {}

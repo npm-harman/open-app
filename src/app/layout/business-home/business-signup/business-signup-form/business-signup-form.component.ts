@@ -147,6 +147,7 @@ export class BusinessSignupFormComponent implements OnInit {
 
   onSubmit(){
     console.log(this.signupForm.value);
+    this.step = this.step + 1;
   }
 
 }
