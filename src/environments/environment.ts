@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  customRestEndPoint: 'http://rxfarm91.cse.buffalo.edu:5001/api/',
 };
 
 /*

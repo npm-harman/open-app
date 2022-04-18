@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -11,10 +12,15 @@ export class SigninPopupComponent implements OnInit {
   closeResult = '';
   signinForm: FormGroup;
   emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,12}$/;
+  openTab: any = null;
 
-  constructor(private modalService: NgbModal, private fb: FormBuilder) {}
+  constructor(private modalService: NgbModal, private fb: FormBuilder, private route: ActivatedRoute, private router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.openTab = params['openTab'] ? params['openTab'] : 'personal';
+    });
+  }
 
   initSigninForm() {
     this.signinForm = this.fb.group({
@@ -28,6 +34,12 @@ export class SigninPopupComponent implements OnInit {
 
   onSubmit() {
     console.log(this.signinForm.value);
+    if(this.openTab === 'personal'){
+    console.log(this.signinForm.value);
+    }else{
+      this.router.navigate(['/general/business-home/dashboard']);
+    }
+    this.modalService.dismissAll();
   }
 
   open(content: any) {

@@ -9,7 +9,7 @@
     ></button>
   </div>
   <div class="modal-body">
-    <form [formGroup]="signinForm">
+    <form [formGroup]="signinForm" (ngSubmit)="onSubmit()">
       <div class="row mb-3">
         <div class="form-group col-md-12">
           <label for="inputEmail">Email<em>*</em></label>
