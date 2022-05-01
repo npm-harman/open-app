@@ -7,10 +7,10 @@
       class="d-inline-block align-top"
       alt=""
     />
-    OpenApp
+    Open App
   </a>
 
-  <span class="form-inline">
+  <span class="form-inline" *ngIf="!currentUser">
     <span
       class="navbar-text"
       style="margin-right: 1rem"
@@ -47,4 +47,27 @@
     </span>
     <app-signin-popup></app-signin-popup>
   </span>
+
+  <div class="row" *ngIf="currentUser">
+    <div class="col">
+      <div ngbDropdown class="d-inline-block">
+        <button
+          id="dropdownBasic1"
+          ngbDropdownToggle
+          type="button"
+          class="btn btn-danger mx-5"
+        >
+          <i class="fa fa-user" aria-hidden="true"></i>
+        </button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <button ngbDropdownItem>
+            <span href="#" [routerLink]="['/general/business-home/profile']"
+              >Profile</span
+            >
+          </button>
+          <button ngbDropdownItem (click)="logout()">Logout</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </nav>

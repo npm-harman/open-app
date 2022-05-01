@@ -6,6 +6,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { BusinessSignupService } from './business-signup.service';
 
 @Component({
   selector: 'app-business-signup-form',
@@ -17,7 +18,7 @@ export class BusinessSignupFormComponent implements OnInit {
   step = 1;
   emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,12}$/;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private businessSignupService: BusinessSignupService) {}
 
   ngOnInit(): void {
     this.initSignupForm();
@@ -148,6 +149,62 @@ export class BusinessSignupFormComponent implements OnInit {
   onSubmit(){
     console.log(this.signupForm.value);
     this.step = this.step + 1;
+
+    const registerBussiness = {
+      user: {
+        firstName: 'Aditya ',
+        lastName: 'Jagtap',
+        phoneNumber: '8855019299',
+        emailId: 'adityavj2010@gmail.com',
+      },
+      business: {
+        bName: 'Adityas saloon',
+        bCity: 'Buffalo',
+        bState: 'NY',
+        bType: 'saloon',
+        bZip: '14214',
+      },
+      staff: [
+        {
+          firstName: 'pehla chamcha',
+          emailId: 'pehlachamcha@gmail.com',
+        },
+      ],
+      businessServices: [
+        {
+          serviceName: 'Hair cut',
+          cost: 20,
+          time: 30,
+        },
+        {
+          serviceName: 'Beard shaping',
+          cost: 10,
+          time: 20,
+        },
+      ],
+      businessHours: [
+        {
+          startTime: 10,
+          endTime: 17,
+          day: 1,
+        },
+        {
+          startTime: 10,
+          endTime: 17,
+          day: 2,
+        },
+        {
+          startTime: 10,
+          endTime: 17,
+          day: 3,
+        },
+      ],
+    };
+
+    this.businessSignupService.registerBusiness(registerBussiness)
+    .subscribe(res=>{
+      console.log(res);
+    })
   }
 
 }

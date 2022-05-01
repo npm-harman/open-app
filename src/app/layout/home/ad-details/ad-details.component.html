@@ -46,40 +46,18 @@
                 </div>
               </div>
             </div>
-            <div class="row">
-              <h2>Services</h2>
-              <hr />
-              <ul style="list-style-type: none">
-                <li *ngFor="let service of details.services">
-                  <i class="fa fa-bullseye text-danger" aria-hidden="true"></i
-                  ><span class="d-inline-block mx-2" style="width: 100px">{{
-                    service.name
-                  }}</span>
-                  <strong class="d-inline mx-5"
-                    >&#x24;{{ service.price }}</strong
-                  >
-                </li>
-              </ul>
-            </div>
           </ng-template>
         </li>
         <li [ngbNavItem]="2">
-          <a ngbNavLink>Contact</a>
+          <a ngbNavLink>Services</a>
           <ng-template ngbNavContent>
-            <p>
-              Sed commodo, leo at suscipit dictum, quam est porttitor sapien,
-              eget sodales nibh elit id diam. Nulla facilisi. Donec egestas
-              ligula vitae odio interdum aliquet. Duis lectus turpis, luctus
-              eget tincidunt eu, congue et odio. Duis pharetra et nisl at
-              faucibus. Quisque luctus pulvinar arcu, et molestie lectus
-              ultrices et. Sed diam urna, egestas ut ipsum vel, volutpat
-              volutpat neque. Praesent fringilla tortor arcu. Vivamus faucibus
-              nisl enim, nec tristique ipsum euismod facilisis. Morbi ut
-              bibendum est, eu tincidunt odio. Orci varius natoque penatibus et
-              magnis dis parturient montes, nascetur ridiculus mus. Mauris
-              aliquet odio ac lorem aliquet ultricies in eget neque. Phasellus
-              nec tortor vel tellus pulvinar feugiat.
-            </p>
+            <app-service-list [allowEdit]="false"></app-service-list>
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="3">
+          <a ngbNavLink>Staff</a>
+          <ng-template ngbNavContent>
+            <app-staff-list [allowEdit]="false"></app-staff-list>
           </ng-template>
         </li>
       </ul>

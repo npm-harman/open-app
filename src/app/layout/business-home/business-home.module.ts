@@ -5,12 +5,18 @@ import { BusinessHomeRoutingModule } from './business-home-routing.module';
 import { BusinessHomeComponent } from './business-home.component';
 import { BusinessSignupComponent } from './business-signup/business-signup.component';
 import { BusinessSignupFormComponent } from './business-signup/business-signup-form/business-signup-form.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BusinessDashboardComponent } from './business-dashboard/business-dashboard.component';
 import { BusinessCalendarComponent } from './business-calendar/business-calendar.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CalendarHeaderComponent } from './business-calendar/calendar-header/calendar-header.component';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { FlatpickrModule } from 'angularx-flatpickr';
+import { BusinessProfileComponent } from './business-profile/business-profile.component';
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import { BusinessServicesComponent } from './business-profile/business-services/business-services.component';
+import { SharedModule } from 'src/app/shared/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +25,9 @@ import { CalendarHeaderComponent } from './business-calendar/calendar-header/cal
     BusinessSignupFormComponent,
     BusinessDashboardComponent,
     BusinessCalendarComponent,
-    CalendarHeaderComponent
+    CalendarHeaderComponent,
+    BusinessProfileComponent,
+    BusinessServicesComponent
   ],
   imports: [
     CommonModule,
@@ -29,6 +37,11 @@ import { CalendarHeaderComponent } from './business-calendar/calendar-header/cal
       provide: DateAdapter,
       useFactory: adapterFactory,
     }),
+    FormsModule,
+    NgbModalModule,
+    FlatpickrModule.forRoot(),
+
+    SharedModule,
   ]
 })
 export class BusinessHomeModule { }

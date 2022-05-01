@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { BusinessSignupService } from '../../business-home/business-signup/business-signup-form/business-signup.service';
 
 @Component({
   selector: 'app-signin-popup',
@@ -14,10 +15,16 @@ export class SigninPopupComponent implements OnInit {
   emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,12}$/;
   openTab: any = null;
 
-  constructor(private modalService: NgbModal, private fb: FormBuilder, private route: ActivatedRoute, private router: Router) {}
+  constructor(
+    private modalService: NgbModal,
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private businessSignupService: BusinessSignupService
+  ) {}
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       this.openTab = params['openTab'] ? params['openTab'] : 'personal';
     });
   }
@@ -34,10 +41,11 @@ export class SigninPopupComponent implements OnInit {
 
   onSubmit() {
     console.log(this.signinForm.value);
-    if(this.openTab === 'personal'){
-    console.log(this.signinForm.value);
-    }else{
-      this.router.navigate(['/general/business-home/dashboard']);
+    if (this.openTab === 'personal') {
+      console.log(this.signinForm.value);
+    } else {
+      this.businessSignupService.setCurrentUser({name: "Test"});
+      this.router.navigate(['/general/business-home/calendar']);
     }
     this.modalService.dismissAll();
   }

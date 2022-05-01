@@ -8,10 +8,16 @@ import { UserSignupPopupComponent } from './components/user-signup-popup/user-si
 import { ReactiveFormsModule } from '@angular/forms';
 import { SigninPopupComponent } from './components/signin-popup/signin-popup.component';
 import { AppToastComponent } from './components/app-toast/app-toast.component';
-import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
-  declarations: [LayoutComponent, HeaderComponent, UserSignupPopupComponent, SigninPopupComponent, AppToastComponent],
+  declarations: [
+    LayoutComponent,
+    HeaderComponent,
+    UserSignupPopupComponent,
+    SigninPopupComponent,
+    AppToastComponent
+  ],
   imports: [CommonModule, LayoutRoutingModule, ReactiveFormsModule, NgbModule],
 })
 export class LayoutModule {}

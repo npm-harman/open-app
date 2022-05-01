@@ -1,0 +1,25 @@
+
+<div class="m-3 p-3">
+    <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+        <li [ngbNavItem]="1">
+          <a ngbNavLink>General</a>
+          <ng-template ngbNavContent>
+            <p>This will include editable the general business info overview.</p>
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="2">
+          <a ngbNavLink>Staff</a>
+          <ng-template ngbNavContent>
+           <app-staff-list [allowEdit]="true"></app-staff-list>
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="3">
+          <a ngbNavLink>Services</a>
+          <ng-template ngbNavContent>
+            <app-service-list [allowEdit]="true"></app-service-list>
+          </ng-template>
+        </li>
+      </ul>
+      
+      <div [ngbNavOutlet]="nav" class="mt-2"></div>
+</div>

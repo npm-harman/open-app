@@ -1,0 +1,124 @@
+<div class="container border border-danger rounded">
+  <div class="mx-2 p-3">
+    <span class="d-flex justify-content-between">
+      <strong>Staff Details</strong>
+      <button
+      *ngIf="allowEdit"
+        type="button"
+        class="btn btn-outline-secondary my-2 my-sm-0 ml-2"
+        (click)="onAddStaffMember()"
+      >
+        &#x2b;
+      </button>
+    </span>
+    <form
+      *ngIf="showForm"
+      [formGroup]="staffMemberForm"
+      (ngSubmit)="onSubmit()"
+    >
+      <div class="row mb-3">
+        <div class="form-group col-md-3">
+          <label for="inputEmail">Full Name<em>*</em></label>
+          <input
+            type="text"
+            class="form-control"
+            id="inputFullName"
+            formControlName="fullName"
+          />
+        </div>
+        <div class="form-group col-md-3">
+          <label for="inputIgProfile">Instagram</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                <div><i class="fa fa-instagram" aria-hidden="true"></i></div>
+              </span>
+            </div>
+            <input
+              type="text"
+              class="form-control"
+              id="inputIgProfile"
+              formControlName="igProfile"
+            />
+          </div>
+        </div>
+        <div class="form-group col-md-3">
+          <label for="inputFbProfile">Facebook</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                <div>
+                  <i class="fa fa-facebook-square" aria-hidden="true"></i>
+                </div>
+              </span>
+            </div>
+            <input
+              type="text"
+              class="form-control"
+              id="inputFbProfile"
+              formControlName="fbProfile"
+            />
+          </div>
+        </div>
+        <div class="form-group col-md-3">
+          <label for="inputTiktokProfile">Tiktok</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                <div><i class="fa fa-music" aria-hidden="true"></i></div>
+              </span>
+            </div>
+            <input
+              type="text"
+              class="form-control"
+              id="inputTiktokProfile"
+              formControlName="tiktokProfile"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-3">
+          <label for="inputPicture">Profile Picture</label>
+          <input
+            type="file"
+            accept="image/*"
+            class="form-control"
+            id="inputPicture"
+            formControlName="picture"
+          />
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputDesc">Description</label>
+          <textarea
+            type="text"
+            class="form-control"
+            id="inputDesc"
+            formControlName="desc"
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="row mt-2">
+        <div class="form-group col-md-12">
+          <div class="d-flex flex-row-reverse">
+            <button type="submit" class="btn btn-outline-success">Save</button>
+            <button
+              type="button"
+              class="btn btn-outline-danger mx-3"
+              (click)="onCancel()"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+    <hr />
+    <div class="col" *ngFor="let staff of staffList">
+      <div class="border rounded border-white">
+        <app-staff-list-item [allowEdit]="allowEdit" [staffDetails]="staff"></app-staff-list-item>
+      </div>
+    </div>
+  </div>
+</div>
