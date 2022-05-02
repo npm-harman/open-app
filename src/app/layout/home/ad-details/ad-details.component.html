@@ -60,6 +60,12 @@
             <app-staff-list [allowEdit]="false"></app-staff-list>
           </ng-template>
         </li>
+        <li [ngbNavItem]="4">
+          <a ngbNavLink>Business Hours</a>
+          <ng-template ngbNavContent>
+            <app-business-hours [allowEdit]="false"></app-business-hours>
+          </ng-template>
+        </li>
       </ul>
       <div [ngbNavOutlet]="nav" class="mt-2"></div>
     </div>

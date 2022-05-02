@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SafeUrlPipe } from './safe-url.pipe';
 import { ServiceListComponent } from './service-list/service-list.component';
 import { ServiceListItemComponent } from './service-list-item/service-list-item.component';
+import { BusinessHoursComponent } from './business-hours/business-hours.component';
 
 
 
@@ -16,7 +17,8 @@ import { ServiceListItemComponent } from './service-list-item/service-list-item.
     StaffListItemComponent,
     SafeUrlPipe,
     ServiceListComponent,
-    ServiceListItemComponent
+    ServiceListItemComponent,
+    BusinessHoursComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +31,8 @@ import { ServiceListItemComponent } from './service-list-item/service-list-item.
     NgbModule,
     ReactiveFormsModule,
     ServiceListComponent,
-    ServiceListItemComponent
+    ServiceListItemComponent,
+    BusinessHoursComponent
   ]
 })
 export class SharedModule { }

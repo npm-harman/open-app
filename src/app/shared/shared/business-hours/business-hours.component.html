@@ -1,0 +1,96 @@
+<div class="container border border-danger rounded">
+  <div class="mx-2 p-3">
+    <span class="d-flex justify-content-between">
+      <strong>Business Hours</strong>
+      <button
+        *ngIf="allowEdit"
+        type="button"
+        class="btn btn-outline-secondary my-2 my-sm-0 ml-2"
+        (click)="onEditClicked()"
+      >
+        <i class="fa fa-pencil font-weight-bold" aria-hidden="true"></i>
+      </button>
+    </span>
+    <hr />
+    <form [formGroup]="businessHoursForm" (ngSubmit)="onSubmit()">
+      <div class="col-xs-12" formArrayName="businessHours">
+        <div
+          class="row mb-3"
+          *ngFor="let businessHour of getBusinessHoursControl(); let i = index"
+          [formGroupName]="i"
+        >
+          <div class="form-group col-md-3">
+            <input
+              type="text"
+              class="form-control"
+              id="inputDay"
+              formControlName="day"
+              readonly
+            />
+          </div>
+          <div class="form-group col-md-2">
+            <div class="btn-group" role="group">
+              <input
+                type="radio"
+                formControlName="isWorking"
+                [value]="false"
+                class="btn-check"
+                [id]="'btnradio1' + i"
+                autocomplete="off"
+                (change)="onChangeIsWorking(i)"
+              />
+              <label class="btn btn-outline-primary" [for]="'btnradio1' + i"
+                >Off</label
+              >
+              <input
+                type="radio"
+                formControlName="isWorking"
+                [value]="true"
+                class="btn-check"
+                [id]="'btnradio2' + i"
+                autocomplete="off"
+                (change)="onChangeIsWorking(i)"
+              />
+              <label class="btn btn-outline-primary" [for]="'btnradio2' + i"
+                >On</label
+              >
+            </div>
+          </div>
+          <div class="form-group col-md-3">
+            <input
+              type="time"
+              class="form-control"
+              id="inputStart"
+              formControlName="start"
+            />
+          </div>
+          to
+          <div class="form-group col-md-3">
+            <input
+              type="time"
+              class="form-control"
+              id="inputEnd"
+              formControlName="end"
+            />
+          </div>
+        </div>
+        <div class="row" *ngIf="businessHoursForm.enabled">
+          <div class="form-group col-md-12">
+            <div class="d-flex flex-row-reverse">
+              <button type="submit" class="btn btn-outline-success">
+                Save
+              </button>
+              <button
+                type="button"
+                class="btn btn-outline-danger mx-3"
+                (click)="onCancel()"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

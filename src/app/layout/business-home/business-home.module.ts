@@ -14,8 +14,6 @@ import { CalendarHeaderComponent } from './business-calendar/calendar-header/cal
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { BusinessProfileComponent } from './business-profile/business-profile.component';
-import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
-import { BusinessServicesComponent } from './business-profile/business-services/business-services.component';
 import { SharedModule } from 'src/app/shared/shared/shared.module';
 
 @NgModule({
@@ -27,7 +25,6 @@ import { SharedModule } from 'src/app/shared/shared/shared.module';
     BusinessCalendarComponent,
     CalendarHeaderComponent,
     BusinessProfileComponent,
-    BusinessServicesComponent
   ],
   imports: [
     CommonModule,
@@ -40,7 +37,6 @@ import { SharedModule } from 'src/app/shared/shared/shared.module';
     FormsModule,
     NgbModalModule,
     FlatpickrModule.forRoot(),
-
     SharedModule,
   ]
 })

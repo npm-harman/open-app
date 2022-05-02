@@ -31,16 +31,16 @@ export class BusinessSignupFormComponent implements OnInit {
     this.signupForm = this.fb.group({
       firstName: [null, [Validators.required, Validators.maxLength(40)]],
       lastName: [null, [Validators.required, Validators.maxLength(40)]],
-      email: [
+      emailId: [
         null,
         [Validators.required, Validators.pattern(this.emailPattern)],
       ],
-      businessName: [null, [Validators.required, Validators.maxLength(40)]],
+      bName: [null, [Validators.required, Validators.maxLength(40)]],
       phone: [null, Validators.required],
-      city: [null, [Validators.required, Validators.maxLength(40)]],
-      state: [null, [Validators.required, Validators.maxLength(40)]],
-      zipcode: [null, [Validators.required, Validators.maxLength(40)]],
-      category: [null, [Validators.required, Validators.maxLength(40)]],
+      bCity: [null, [Validators.required, Validators.maxLength(40)]],
+      bState: [null, [Validators.required, Validators.maxLength(40)]],
+      bZip: [null, [Validators.required, Validators.maxLength(40)]],
+      bType: [null, [Validators.required, Validators.maxLength(40)]],
       businessHours: businessHoursForDay,
       staffMembers: staffMembers,
       services: services
