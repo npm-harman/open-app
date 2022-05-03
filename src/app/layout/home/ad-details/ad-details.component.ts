@@ -23,6 +23,10 @@ export class AdDetailsComponent implements OnInit {
   appointmentForm: FormGroup;
   active = 1;
 
+  images = [944, 1011, 984].map(
+    (n) => `https://picsum.photos/id/${n}/2000/300`
+  );
+
   constructor(
     private route: ActivatedRoute,
     private fb: FormBuilder,

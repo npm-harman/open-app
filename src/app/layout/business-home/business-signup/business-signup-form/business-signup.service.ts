@@ -9,6 +9,7 @@ export class BusinessSignupService {
   public currentUser: BehaviorSubject<any>;
 
   registerBusiness: (data: any) => Observable<any>;
+  signin: (data: any) => Observable<any>;
 
   constructor(
     @Inject('IWebRequest') private webRequest: IWebRequest,
@@ -17,6 +18,12 @@ export class BusinessSignupService {
     this.registerBusiness = (data) => {
       return webRequest.post<any>(
         this.config.getParams().customRestEndPoint + 'bussiness-sign-up',
+        data
+      );
+    };
+    this.signin = (data) => {
+      return webRequest.post<any>(
+        this.config.getParams().customRestEndPoint + 'sign-in',
         data
       );
     };

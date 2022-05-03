@@ -33,5 +33,6 @@ export class HeaderComponent implements OnInit {
   logout(){
     this.businessSignupService.setCurrentUser(null);
     this.router.navigate(['/general/home']);
+    localStorage.clear();
   }
 }

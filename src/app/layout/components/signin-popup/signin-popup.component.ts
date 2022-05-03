@@ -31,7 +31,7 @@ export class SigninPopupComponent implements OnInit {
 
   initSigninForm() {
     this.signinForm = this.fb.group({
-      email: [
+      emailId: [
         null,
         [Validators.required, Validators.pattern(this.emailPattern)],
       ],
@@ -41,13 +41,15 @@ export class SigninPopupComponent implements OnInit {
 
   onSubmit() {
     console.log(this.signinForm.value);
-    if (this.openTab === 'personal') {
-      console.log(this.signinForm.value);
-    } else {
-      this.businessSignupService.setCurrentUser({name: "Test"});
-      this.router.navigate(['/general/business-home/calendar']);
-    }
+    this.businessSignupService.signin(this.signinForm.value)
+    .subscribe(res=>{
+      this.businessSignupService.setCurrentUser(res);
+      localStorage.setItem('token', res.token);
+      if(res.bId && res.bId > 0){
+        this.router.navigate(['/general/business-home/calendar']);
+      }
     this.modalService.dismissAll();
+    });
   }
 
   open(content: any) {

@@ -4,7 +4,7 @@
         <li [ngbNavItem]="1">
           <a ngbNavLink>General</a>
           <ng-template ngbNavContent>
-            <p>This will include editable the general business info overview.</p>
+            <app-business-general [allowEdit]="true"></app-business-general>
           </ng-template>
         </li>
         <li [ngbNavItem]="2">

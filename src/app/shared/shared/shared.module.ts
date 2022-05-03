@@ -3,13 +3,13 @@ import { CommonModule } from '@angular/common';
 import { StaffListComponent } from './staff-list/staff-list.component';
 import { StaffListItemComponent } from './staff-list-item/staff-list-item.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SafeUrlPipe } from './safe-url.pipe';
 import { ServiceListComponent } from './service-list/service-list.component';
 import { ServiceListItemComponent } from './service-list-item/service-list-item.component';
 import { BusinessHoursComponent } from './business-hours/business-hours.component';
-
-
+import { ngfModule } from "angular-file";
+import { BusinessGeneralComponent } from './business-general/business-general.component';
 
 @NgModule({
   declarations: [
@@ -18,12 +18,15 @@ import { BusinessHoursComponent } from './business-hours/business-hours.componen
     SafeUrlPipe,
     ServiceListComponent,
     ServiceListItemComponent,
-    BusinessHoursComponent
+    BusinessHoursComponent,
+    BusinessGeneralComponent
   ],
   imports: [
     CommonModule,
     NgbModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ngfModule,
+    FormsModule
   ],
   exports:[
     StaffListComponent,
@@ -32,7 +35,10 @@ import { BusinessHoursComponent } from './business-hours/business-hours.componen
     ReactiveFormsModule,
     ServiceListComponent,
     ServiceListItemComponent,
-    BusinessHoursComponent
+    BusinessHoursComponent,
+    BusinessGeneralComponent,
+    FormsModule,
+    CommonModule,
   ]
 })
 export class SharedModule { }

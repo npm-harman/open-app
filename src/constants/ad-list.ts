@@ -223,7 +223,7 @@ export const adList = [
   },
   {
     id: 12,
-    title: 'Lawerence Laboratories',
+    title: 'Lawerence Labs',
     description: 'This is a dummy description',
     city: 'Amherst',
     state: 'New York',
