@@ -1,4 +1,4 @@
-<div class="container border border-danger rounded">
+<div class="container border border-danger rounded" *ngIf="!isLoading">
   <div class="mx-2 p-3">
     <span class="d-flex justify-content-between">
       <strong>Services</strong>
@@ -19,7 +19,7 @@
             type="text"
             class="form-control"
             id="inputFullName"
-            formControlName="name"
+            formControlName="serviceName"
           />
         </div>
         <div class="form-group col-md-3">
@@ -38,7 +38,7 @@
             type="number"
             class="form-control"
             id="inputName"
-            formControlName="price"
+            formControlName="cost"
             placeholder="Price ($)"
           />
         </div>
@@ -50,6 +50,7 @@
             class="form-control"
             id="inputPicture"
             formControlName="picture"
+            (change)="onChangleFile($event)"
           />
         </div>
       </div>
@@ -86,5 +87,10 @@
         ></app-service-list-item>
       </div>
     </div>
+  </div>
+</div>
+<div class="text-center" *ngIf="isLoading">
+  <div class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
   </div>
 </div>

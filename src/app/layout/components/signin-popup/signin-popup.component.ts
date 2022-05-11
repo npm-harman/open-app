@@ -44,7 +44,7 @@ export class SigninPopupComponent implements OnInit {
     this.businessSignupService.signin(this.signinForm.value)
     .subscribe(res=>{
       this.businessSignupService.setCurrentUser(res);
-      localStorage.setItem('token', res.token);
+      localStorage.setItem('user', JSON.stringify(res));
       if(res.bId && res.bId > 0){
         this.router.navigate(['/general/business-home/calendar']);
       }

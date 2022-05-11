@@ -10,6 +10,9 @@ import { ServiceListItemComponent } from './service-list-item/service-list-item.
 import { BusinessHoursComponent } from './business-hours/business-hours.component';
 import { ngfModule } from "angular-file";
 import { BusinessGeneralComponent } from './business-general/business-general.component';
+import { AgmCoreModule } from '@agm/core';
+import { BusinessContactComponent } from './business-contact/business-contact.component';
+import { HourMinPipe } from './pipes/hour-min.pipe';
 
 @NgModule({
   declarations: [
@@ -19,14 +22,20 @@ import { BusinessGeneralComponent } from './business-general/business-general.co
     ServiceListComponent,
     ServiceListItemComponent,
     BusinessHoursComponent,
-    BusinessGeneralComponent
+    BusinessGeneralComponent,
+    BusinessContactComponent,
+    HourMinPipe
   ],
   imports: [
     CommonModule,
     NgbModule,
     ReactiveFormsModule,
     ngfModule,
-    FormsModule
+    FormsModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCPXKi3ENbv9viH136XKOJYaEPfQd5N6hI',
+      libraries: ['places']
+    })
   ],
   exports:[
     StaffListComponent,
@@ -37,8 +46,10 @@ import { BusinessGeneralComponent } from './business-general/business-general.co
     ServiceListItemComponent,
     BusinessHoursComponent,
     BusinessGeneralComponent,
+    BusinessContactComponent,
     FormsModule,
     CommonModule,
+    HourMinPipe,
   ]
 })
 export class SharedModule { }

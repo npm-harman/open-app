@@ -1,31 +1,36 @@
+<div class="p-3">
+  <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+    <li [ngbNavItem]="1">
+      <a ngbNavLink>General</a>
+      <ng-template ngbNavContent>
+        <app-business-general [allowEdit]="true" [bId]="bId"></app-business-general>
+      </ng-template>
+    </li>
+    <li [ngbNavItem]="2">
+      <a ngbNavLink>Staff</a>
+      <ng-template ngbNavContent>
+        <app-staff-list [allowEdit]="true" [bId]="bId"></app-staff-list>
+      </ng-template>
+    </li>
+    <li [ngbNavItem]="3">
+      <a ngbNavLink>Services</a>
+      <ng-template ngbNavContent>
+        <app-service-list [allowEdit]="true" [bId]="bId"></app-service-list>
+      </ng-template>
+    </li>
+    <li [ngbNavItem]="4">
+      <a ngbNavLink>Business Hours</a>
+      <ng-template ngbNavContent>
+        <app-business-hours [allowEdit]="true" [bId]="bId"></app-business-hours>
+      </ng-template>
+    </li>
+    <li [ngbNavItem]="5">
+      <a ngbNavLink>Location & Contact</a>
+      <ng-template ngbNavContent>
+        <app-business-contact [allowEdit]="true" [bId]="bId"></app-business-contact>
+      </ng-template>
+    </li>
+  </ul>
 
-<div class=" p-3">
-    <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
-        <li [ngbNavItem]="1">
-          <a ngbNavLink>General</a>
-          <ng-template ngbNavContent>
-            <app-business-general [allowEdit]="true"></app-business-general>
-          </ng-template>
-        </li>
-        <li [ngbNavItem]="2">
-          <a ngbNavLink>Staff</a>
-          <ng-template ngbNavContent>
-           <app-staff-list [allowEdit]="true"></app-staff-list>
-          </ng-template>
-        </li>
-        <li [ngbNavItem]="3">
-          <a ngbNavLink>Services</a>
-          <ng-template ngbNavContent>
-            <app-service-list [allowEdit]="true"></app-service-list>
-          </ng-template>
-        </li>
-        <li [ngbNavItem]="4">
-          <a ngbNavLink>Business Hours</a>
-          <ng-template ngbNavContent>
-            <app-business-hours [allowEdit]="true"></app-business-hours>
-          </ng-template>
-        </li>
-      </ul>
-      
-      <div [ngbNavOutlet]="nav" class="mt-2"></div>
+  <div [ngbNavOutlet]="nav" class="mt-2"></div>
 </div>

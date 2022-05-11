@@ -1,43 +1,73 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { serviceList } from 'src/constants/staff-list';
+import { PictureService } from '../services/picture.service';
+import { ServiceListService } from '../services/service-list.service';
 
 @Component({
   selector: 'app-service-list',
   templateUrl: './service-list.component.html',
-  styleUrls: ['./service-list.component.scss']
+  styleUrls: ['./service-list.component.scss'],
 })
 export class ServiceListComponent implements OnInit {
-  
   @Input() allowEdit: any;
+  @Input() bId: Number;
+
   serviceForm: FormGroup;
-  serviceList = serviceList;
+  serviceList = [];
   showForm: any = false;
   imageUrl: any = null;
+  selectedPicture: any = null;
+  isLoading: boolean = false;
+  subscription: any;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(
+    private fb: FormBuilder,
+    private pictureService: PictureService,
+    private serviceListService: ServiceListService,
+  ) {}
 
   ngOnInit(): void {
     this.initForm();
-    console.log(this.allowEdit);
+    this.subscription = this.serviceListService.serviceListChange.subscribe(res=>this.getServices());
   }
 
   initForm() {
     this.serviceForm = this.fb.group({
-      name: [null, Validators.required],
+      serviceName: [null, Validators.required],
       picture: null,
       desc: null,
       time: null,
-      price: null,
+      cost: null,
+      bId: this.bId
     });
   }
 
   onAddServiceClicked() {
+    this.serviceForm.reset();
     this.showForm = true;
   }
 
   onSubmit() {
-    console.log(this.serviceForm.value);
+    if (this.selectedPicture) {
+      const formData = new FormData();
+      formData.append('file', this.selectedPicture);
+      this.pictureService.upload(formData).subscribe((res) => {
+        this.addService(res.filename);
+      });
+    } else {
+      this.addService(null);
+    }
+  }
+
+  addService(fileName: any) {
+    let formValue = this.serviceForm.value;
+    formValue.picture = fileName;
+    formValue.bId = this.bId;
+    this.serviceListService.add(formValue).subscribe((res) => {
+      this.showForm = false;
+      this.getServices();
+    });
   }
 
   onCancel() {
@@ -53,4 +83,20 @@ export class ServiceListComponent implements OnInit {
     };
   }
 
+  onChangleFile(event: any) {
+    this.selectedPicture = event.target.files[0];
+  }
+
+  getServices(){
+    this.isLoading = true;
+    this.serviceListService.getAll(this.bId)
+    .subscribe(res =>{
+      this.serviceList = res;
+      this.isLoading = false;
+    });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 }

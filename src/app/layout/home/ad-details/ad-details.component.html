@@ -1,9 +1,9 @@
-<div>
+<div *ngIf="!isLoading">
   <div class="mx-3">
   <ngb-carousel *ngIf="images">
     <ng-template *ngFor="let img of images" ngbSlide>
-      <div class="picsum-img-wrapper">
-        <img [src]="img" alt="Random first slide" />
+      <div class="picsum-img-wrapper" *ngIf="img.length">
+        <img style="height: 300px; max-width: 80%;" [src]="imageEndpoint + img" alt="Random first slide" />
       </div>
       <div class="carousel-caption"></div>
     </ng-template>
@@ -18,13 +18,13 @@
             <div class="mt-3">
               <p>{{ details.description }}</p>
               <p>
-                {{ details.title }} is located at {{ details.city }},
-                {{ details.state }}
+                {{ details.bName }} is located at {{ details.bCity }},
+                {{ details.bState }}
               </p>
             </div>
             <div class="row">
               <h2>Safety Precautions</h2>
-              <hr />
+              <hr style="width: 80%;" />
               <div class="col col-6">
                 <div>
                   <ul style="list-style-type: none">
@@ -60,19 +60,25 @@
         <li [ngbNavItem]="2">
           <a ngbNavLink>Services</a>
           <ng-template ngbNavContent>
-            <app-service-list [allowEdit]="false"></app-service-list>
+            <app-service-list [allowEdit]="false" [bId]="bId"></app-service-list>
           </ng-template>
         </li>
         <li [ngbNavItem]="3">
           <a ngbNavLink>Staff</a>
           <ng-template ngbNavContent>
-            <app-staff-list [allowEdit]="false"></app-staff-list>
+            <app-staff-list [allowEdit]="false" [bId]="bId"></app-staff-list>
           </ng-template>
         </li>
         <li [ngbNavItem]="4">
           <a ngbNavLink>Business Hours</a>
           <ng-template ngbNavContent>
-            <app-business-hours [allowEdit]="false"></app-business-hours>
+            <app-business-hours [allowEdit]="false" [bId]="bId"></app-business-hours>
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="5">
+          <a ngbNavLink>Location & Contact</a>
+          <ng-template ngbNavContent>
+            <app-business-contact [allowEdit]="false" [bId]="bId"></app-business-contact>
           </ng-template>
         </li>
       </ul>
@@ -91,8 +97,8 @@
               formControlName="serviceId"
             >
               <option value="null" disabled>Service</option>
-              <option *ngFor="let x of details.services" [ngValue]="x.id">
-                {{ x.name }}
+              <option *ngFor="let x of serviceList" [ngValue]="x.id">
+                {{ x.serviceName }}
               </option>
             </select>
           </div>
@@ -105,6 +111,7 @@
               class="form-control"
               id="inputEmail"
               formControlName="date"
+              (change)="onDateChange()"
             />
           </div>
           <div class="form-group col-md-6">
@@ -115,8 +122,8 @@
               formControlName="time"
             >
               <option value="null" disabled>Time</option>
-              <option *ngFor="let x of details.availability" [ngValue]="x.time">
-                {{ x.time }}
+              <option *ngFor="let x of availableAppointments" [ngValue]="x.time">
+                {{ x.time | hourMin}}
               </option>
             </select>
           </div>
@@ -132,5 +139,10 @@
         </div>
       </form>
     </div>
+  </div>
+</div>
+<div class="text-center" *ngIf="isLoading">
+  <div class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
   </div>
 </div>

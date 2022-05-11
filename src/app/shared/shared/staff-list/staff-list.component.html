@@ -23,7 +23,7 @@
             type="text"
             class="form-control"
             id="inputFullName"
-            formControlName="fullName"
+            formControlName="firstName"
           />
         </div>
         <div class="form-group col-md-3">
@@ -85,7 +85,8 @@
             accept="image/*"
             class="form-control"
             id="inputPicture"
-            formControlName="picture"
+            formControlName="profilePicture"
+            (change)="onChangleFile($event)"
           />
         </div>
         <div class="form-group col-md-6">

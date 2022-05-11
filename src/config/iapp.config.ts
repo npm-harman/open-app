@@ -13,6 +13,7 @@ export interface IWebRequest {
   get: <T>(url: string, data?: any, header?: any, goToErrorState?: boolean) => Observable<any>;
   post: <T>(url: string, data?: any, header?: any, goToErrorState?: boolean) => Observable<any>;
   put: <T>(url: string, data?: any, header?: any, goToErrorState?: boolean) => Observable<any>;
+  patch: <T>(url: string, data?: any, header?: any, goToErrorState?: boolean) => Observable<any>;
   delete: <T>(url: string, data?: any, header?: any, goToErrorState?: boolean) => Observable<any>;
   postFile: <T>(url: string, data?: any, header?: any, goToErrorState?: boolean) => Observable<any>;
   putFile: <T>(url: string, data?: any, header?: any, goToErrorState?: boolean) => Observable<any>;

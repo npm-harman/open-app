@@ -4,13 +4,13 @@
       <div class="img-square-wrapper">
         <img
           class=""
-          [src]="staffDetails.picture"
+          [src]="imageEndpoint + staffDetails.profilePicture"
           alt="Card image cap"
           style="height: 200px; width: 200px"
         />
       </div>
       <div class="card-body">
-        <h4 class="card-title">{{ staffDetails.fullName }}</h4>
+        <h4 class="card-title">{{ staffDetails.firstName }}</h4>
         <div class="card-text">
           <p>{{ staffDetails.desc }}</p>
         </div>
@@ -28,7 +28,7 @@
               <button ngbDropdownItem (click)="onEditClicked()">
                 <i class="fa fa-pencil font-weight-bold" aria-hidden="true"></i>
               </button>
-              <button ngbDropdownItem>
+              <button ngbDropdownItem (click)="onDeleteClicked()">
                 <i
                   class="fa fa-trash font-weight-bold text-danger"
                   aria-hidden="true"
@@ -45,7 +45,7 @@
               style="max-height: 40px; cursor: pointer"
               src="/assets/ig_icon.webp"
               class="mb-2"
-          /></a>
+          /></a><br/>
           <a
             [href]="'https://www.facebook.com/' + staffDetails.fbProfile"
             target="_blank"
@@ -54,7 +54,7 @@
               alt="facebook"
               style="max-height: 40px; cursor: pointer"
               class="mb-2"
-          /></a>
+          /></a><br/>
           <a
             [href]="'https://www.tiktok.com/@' + staffDetails.tiktokProfile"
             target="_blank"
@@ -78,7 +78,7 @@
           type="text"
           class="form-control"
           id="inputFullName"
-          formControlName="fullName"
+          formControlName="firstName"
         />
       </div>
       <div class="form-group col-md-3">
@@ -140,6 +140,7 @@
           accept="image/*"
           class="form-control"
           id="inputPicture"
+          (change)="onChangleFile($event)"
         />
       </div>
       <div class="form-group col-md-6">

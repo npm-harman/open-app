@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UserService } from 'src/app/shared/shared/services/user.service';
+import { AppToastService } from 'src/app/utils/app-toast.service';
 
 @Component({
   selector: 'app-user-signup-popup',
@@ -14,25 +16,30 @@ export class UserSignupPopupComponent implements OnInit {
 
 
 
-  constructor(private modalService: NgbModal, private fb: FormBuilder) { }
+  constructor(private modalService: NgbModal, private fb: FormBuilder, private userService: UserService, 
+    private appToastService: AppToastService,) { }
 
   ngOnInit(): void {
   }
 
   initSigninForm(){
     this.signinForm = this.fb.group({
-      email: [
+      emailId: [
         null,
         [Validators.required, Validators.pattern(this.emailPattern)],
       ],
       password: [null, Validators.required],
-      confirmPassword: [null, Validators.required],
-      fullName: [null, Validators.required],
+      phoneNumber: [null, Validators.required],
+      firstName: [null, Validators.required],
     });
   }
   
   onSubmit(){
-    console.log(this.signinForm.value);
+   this.userService.registerUser(this.signinForm.value)
+   .subscribe(res=>{
+     this.showSuccess();
+    this.modalService.dismissAll();
+   })
   }
 
   open(content: any) {
@@ -52,6 +59,14 @@ export class UserSignupPopupComponent implements OnInit {
     } else {
       return `with: ${reason}`;
     }
+  }
+
+  showSuccess() {
+    this.appToastService.show({
+      message: 'Sign up successful!',
+      class: 'bg-success text-light',
+      delay: 10000,
+    });
   }
 
 }

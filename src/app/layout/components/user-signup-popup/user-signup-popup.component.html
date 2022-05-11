@@ -9,7 +9,7 @@
     ></button>
   </div>
   <div class="modal-body">
-    <form [formGroup]="signinForm">
+    <form [formGroup]="signinForm" (ngSubmit)="onSubmit()">
       <div class="row mb-3">
         <div class="form-group col-md-12">
           <label for="inputEmail">Full Name<em>*</em></label>
@@ -17,7 +17,7 @@
             type="text"
             class="form-control"
             id="inputFullName"
-            formControlName="fullName"
+            formControlName="firstName"
           />
         </div>
       </div>
@@ -28,7 +28,7 @@
             type="email"
             class="form-control"
             id="inputEmail"
-            formControlName="email"
+            formControlName="emailId"
           />
         </div>
       </div>
@@ -45,12 +45,12 @@
       </div>
       <div class="row mb-3">
         <div class="form-group col-md-12">
-          <label for="inputPassword">Confirm Password<em>*</em></label>
+          <label for="inputEmail4">Phone Number<em>*</em></label>
           <input
-            type="password"
+            type="text"
             class="form-control"
-            id="inputPassword"
-            formControlName="password"
+            id="inputPhone"
+            formControlName="phoneNumber"
           />
         </div>
       </div>
@@ -63,7 +63,7 @@
         >
           Cancel
         </button>
-        <button type="submit" class="btn btn-outline-success">Continue</button>
+        <button type="submit" class="btn btn-outline-success">Sign-up</button>
       </div>
     </form>
   </div>

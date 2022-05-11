@@ -16,7 +16,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     HeaderComponent,
     UserSignupPopupComponent,
     SigninPopupComponent,
-    AppToastComponent
+    AppToastComponent,
   ],
   imports: [CommonModule, LayoutRoutingModule, ReactiveFormsModule, NgbModule],
 })

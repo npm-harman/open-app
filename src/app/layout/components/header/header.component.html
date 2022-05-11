@@ -1,5 +1,13 @@
 <nav class="navbar navbar-light bg-light p-2">
-  <a class="navbar-brand" href="#" [routerLink]="['/general/home/']">
+  <a
+    class="navbar-brand"
+    href="#"
+    [routerLink]="
+      currentUser && currentUser.bId
+        ? ['/general/business-home/calendar']
+        : ['/general/home/']
+    "
+  >
     <img
       src="/assets/openApp.png"
       width="40"
@@ -61,7 +69,10 @@
         </button>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
           <button ngbDropdownItem>
-            <span href="#" [routerLink]="['/general/business-home/profile']"
+            <span
+              href="#"
+              [routerLink]="['/general/business-home/profile']"
+              [queryParams]="{ bId: currentUser.bId }"
               >Profile</span
             >
           </button>

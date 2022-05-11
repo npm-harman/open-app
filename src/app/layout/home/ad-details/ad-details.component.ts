@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { environment } from '@environment';
+import { HomeService } from 'src/app/shared/shared/services/home.service';
+import { ServiceListService } from 'src/app/shared/shared/services/service-list.service';
 import { AppToastService } from 'src/app/utils/app-toast.service';
 import {
   adList,
@@ -14,7 +17,7 @@ import {
   styleUrls: ['./ad-details.component.scss'],
 })
 export class AdDetailsComponent implements OnInit {
-  id = null;
+  bId: Number;
   adList = adList;
   staffScreening = staffScreening;
   cleaningAndSanitization = cleaningAndSanitization;
@@ -22,23 +25,27 @@ export class AdDetailsComponent implements OnInit {
   isLoading = false;
   appointmentForm: FormGroup;
   active = 1;
+  serviceList: any = [];
+  availableAppointments: any = [];
 
-  images = [944, 1011, 984].map(
-    (n) => `https://picsum.photos/id/${n}/2000/300`
-  );
+  images: any = [];
+  imageEndpoint = environment.assetsEndPoint;
 
   constructor(
     private route: ActivatedRoute,
     private fb: FormBuilder,
-    private appToastService: AppToastService
+    private appToastService: AppToastService,
+    private homeService: HomeService,
+    private serviceListService: ServiceListService
   ) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
-      this.id = params['id'];
+      this.bId = params['bId'];
     });
     this.getDetails();
     this.initAppointmentForm();
+
   }
 
   initAppointmentForm() {
@@ -49,10 +56,32 @@ export class AdDetailsComponent implements OnInit {
     });
   }
 
-  getDetails() {
+  getDetails(){
     this.isLoading = true;
-    this.details = this.adList.filter((ad) => ad.id == this.id)[0];
-    this.isLoading = false;
+    this.homeService.getBusinessById(this.bId)
+    .subscribe(res=>{
+      this.details = res;
+      this.images.push(res.image1);
+      this.images.push(res.image2);
+      this.images.push(res.image3);
+      this.getServices()
+    })
+  }
+
+  getServices(){
+    this.serviceListService.getAll(this.bId)
+    .subscribe(res =>{
+      this.serviceList = res;
+      this.isLoading = false;
+    });
+  }
+
+  onDateChange(){
+    this.homeService.getBusinessAvailabilityByDate(this.bId, new Date(this.appointmentForm.value.date))
+    .subscribe(res=>{
+      this.availableAppointments= res[0].availableAppointments;
+      console.log(this.availableAppointments);
+    })
   }
 
   onSubmit() {

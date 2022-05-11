@@ -4,14 +4,14 @@
       <div class="img-square-wrapper">
         <img
           class=""
-          [src]="serviceDetails.picture"
+          [src]="imageEndpoint + serviceDetails.picture"
           alt="Card image cap"
           style="height: 200px; width: 200px"
         />
       </div>
       <div class="card-body">
-        <h4 class="card-title">{{ serviceDetails.name }}</h4>
-        <p class="card-title">${{ serviceDetails.price }}</p>
+        <h4 class="card-title">{{ serviceDetails.serviceName }}</h4>
+        <p class="card-title">${{ serviceDetails.cost }}</p>
         <div class="card-text">
           <p>{{ serviceDetails.desc }}</p>
         </div>
@@ -29,7 +29,7 @@
               <button ngbDropdownItem (click)="onEditClicked()">
                 <i class="fa fa-pencil font-weight-bold" aria-hidden="true"></i>
               </button>
-              <button ngbDropdownItem>
+              <button ngbDropdownItem (click)="onDeleteClicked()">
                 <i
                   class="fa fa-trash font-weight-bold text-danger"
                   aria-hidden="true"
@@ -52,7 +52,7 @@
           type="text"
           class="form-control"
           id="inputFullName"
-          formControlName="name"
+          formControlName="serviceName"
         />
       </div>
       <div class="form-group col-md-3">
@@ -71,7 +71,7 @@
           type="number"
           class="form-control"
           id="inputName"
-          formControlName="price"
+          formControlName="cost"
           placeholder="Price ($)"
         />
       </div>
@@ -82,6 +82,7 @@
           accept="image/*"
           class="form-control"
           id="inputPicture"
+          (change)="onChangleFile($event)"
         />
       </div>
     </div>
