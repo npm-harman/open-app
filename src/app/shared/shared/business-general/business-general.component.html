@@ -4,7 +4,16 @@
       <ngb-carousel *ngIf="images">
         <ng-template *ngFor="let img of images" ngbSlide>
           <div class="picsum-img-wrapper">
-            <img style="height: 300px; width: 100%;" [src]="img.length>0 ? imageEndpoint + img: '/assets/businessBack2.jpg'" alt="Random first slide" />
+            <img
+              style="height: 300px; width: 100%"
+              [src]="
+                img.length > 0
+                  ? imageEndpoint + img
+                  : '/assets/businessBack2.jpg'
+              "
+              alt="Random first slide"
+              onerror="this.src='/assets/openApp.png'"
+            />
           </div>
           <div class="carousel-caption"></div>
         </ng-template>

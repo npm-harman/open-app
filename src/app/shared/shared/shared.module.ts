@@ -13,6 +13,8 @@ import { BusinessGeneralComponent } from './business-general/business-general.co
 import { AgmCoreModule } from '@agm/core';
 import { BusinessContactComponent } from './business-contact/business-contact.component';
 import { HourMinPipe } from './pipes/hour-min.pipe';
+import { AppointmentListComponent } from './appointment-list/appointment-list.component';
+import { AppointmentListItemComponent } from './appointment-list-item/appointment-list-item.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { HourMinPipe } from './pipes/hour-min.pipe';
     BusinessHoursComponent,
     BusinessGeneralComponent,
     BusinessContactComponent,
-    HourMinPipe
+    HourMinPipe,
+    AppointmentListComponent,
+    AppointmentListItemComponent,
   ],
   imports: [
     CommonModule,
@@ -50,6 +54,8 @@ import { HourMinPipe } from './pipes/hour-min.pipe';
     FormsModule,
     CommonModule,
     HourMinPipe,
+    AppointmentListComponent,
+    AppointmentListItemComponent
   ]
 })
 export class SharedModule { }

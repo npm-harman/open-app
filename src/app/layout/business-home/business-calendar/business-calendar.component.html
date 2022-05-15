@@ -29,7 +29,7 @@
     </div>
   </div>
   <div class="col-md-4">
-    <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+    <h3>{{ viewDate | calendarDate: view + "ViewTitle":"en" }}</h3>
   </div>
   <div class="col-md-4">
     <div class="btn-group">
@@ -54,51 +54,44 @@
       >
         Day
       </div>
-
     </div>
-    <button
-    class="btn btn-primary mx-5"
-    style="float: right;"
-  >
-    Add+
-  </button>
+    <button class="btn btn-primary mx-5" style="float: right">Add+</button>
   </div>
 </div>
 <br />
-<div [ngSwitch]="view">
-  <mwl-calendar-month-view
-    *ngSwitchCase="CalendarView.Month"
-    [viewDate]="viewDate"
-    [events]="events"
-    [refresh]="refresh"
-    [activeDayIsOpen]="activeDayIsOpen"
-    (dayClicked)="dayClicked($event.day)"
-    (eventClicked)="handleEvent('Clicked', $event.event)"
-    (eventTimesChanged)="eventTimesChanged($event)"
-  >
-  </mwl-calendar-month-view>
-  <mwl-calendar-week-view
-    *ngSwitchCase="CalendarView.Week"
-    [viewDate]="viewDate"
-    [events]="events"
-    [refresh]="refresh"
-    (eventClicked)="handleEvent('Clicked', $event.event)"
-    (eventTimesChanged)="eventTimesChanged($event)"
-    [dayStartHour]="8"
-    [dayEndHour]="20"
-  >
-  </mwl-calendar-week-view>
-  <mwl-calendar-day-view
-    *ngSwitchCase="CalendarView.Day"
-    [viewDate]="viewDate"
-    [events]="events"
-    [refresh]="refresh"
-    (eventClicked)="handleEvent('Clicked', $event.event)"
-    (eventTimesChanged)="eventTimesChanged($event)"
-    [dayStartHour]="8"
-    [dayEndHour]="20"
-  >
-  </mwl-calendar-day-view>
+<div *ngIf="load | async; else loading">
+  <div [ngSwitch]="view">
+    <mwl-calendar-month-view
+      *ngSwitchCase="CalendarView.Month"
+      [viewDate]="viewDate"
+      [events]="events"
+      [refresh]="refresh"
+      [activeDayIsOpen]="activeDayIsOpen"
+      (dayClicked)="dayClicked($event.day)"
+      (eventClicked)="handleEvent($event.event)"
+    >
+    </mwl-calendar-month-view>
+    <mwl-calendar-week-view
+      *ngSwitchCase="CalendarView.Week"
+      [viewDate]="viewDate"
+      [events]="events"
+      [refresh]="refresh"
+      (eventClicked)="handleEvent($event.event)"
+      [dayStartHour]="8"
+      [dayEndHour]="20"
+    >
+    </mwl-calendar-week-view>
+    <mwl-calendar-day-view
+      *ngSwitchCase="CalendarView.Day"
+      [viewDate]="viewDate"
+      [events]="events"
+      [refresh]="refresh"
+      (eventClicked)="handleEvent($event.event)"
+      [dayStartHour]="8"
+      [dayEndHour]="20"
+    >
+    </mwl-calendar-day-view>
+  </div>
 </div>
 
 <ng-template #modalContent let-close="close">
@@ -110,26 +103,31 @@
   </div>
   <div class="modal-body">
     <div>
-      Title: 
-      <pre>Jack: Hair Spa</pre>
+      Title:
+      <pre>{{modalData.title}}</pre>
     </div>
     <div>
       Details:
       <pre>
-        <span>Start Time: </span>09 AM, Apr 20
-        <span>End Time: </span>12 AM, Apr 20
-        <span>Staff: </span>Lily
-        <span>Note: </span>Hey, I need wheelchair assistance.
+        <span>Start: </span>{{modalData.start | date: "medium"}}
+        <span>End: </span>{{modalData.end | date: "medium"}}
 
+        <span>Staff: </span>{{modalData.meta.staffDetails?.firstName}}
+        <span>Note: </span>{{modalData.meta.notes}}
       </pre>
     </div>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-secondary" (click)="close()">
-      Edit
+    <button type="button" class="btn btn-outline-danger" (click)="onCancelAppointment()">
+      Cancel Appointment
     </button>
-    <button type="button" class="btn btn-outline-success" (click)="close()">
-      Complete
-    </button>
+  </div>
+</ng-template>
+
+<ng-template #loading>
+  <div class="text-center">
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
   </div>
 </ng-template>

@@ -1,0 +1,51 @@
+<div *ngIf="!isLoading">
+  <div class="card">
+    <div class="card-horizontal">
+      <div class="img-square-wrapper">
+        <img
+          [src]="imageEndpoint + businessDetails.image1"
+          alt="image cap"
+          style="height: 200px; width: 200px"
+          onerror="this.src='/assets/openApp.png'"
+        />
+      </div>
+      <div class="card-body">
+        <h4 class="card-title">{{ serviceDetails.serviceName }}</h4>
+        <p class="card-title">${{ serviceDetails.cost }}</p>
+        <div class="card-text">
+          <p class="text-danger">
+            {{ details.startDateTime | date: "medium" }}
+          </p>
+          <span
+            ><span class="font-weight-bold">{{ businessDetails.bName }}</span>
+            at
+            <span class="text-danger clickable"
+              >{{ businessDetails.bCity }}, {{ businessDetails.bState }}</span
+            ></span
+          >
+          <p>{{ details.notes }}</p>
+        </div>
+      </div>
+      <div class="card-footer px-0">
+        <div class="text-center">
+          <div ngbDropdown>
+            <a
+              role="button"
+              class="nav-link"
+              id="dropdownBasic1"
+              ngbDropdownToggle
+            ></a>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+              <button ngbDropdownItem (click)="onDeleteClicked()">
+                <i
+                  class="fa fa-trash font-weight-bold text-danger"
+                  aria-hidden="true"
+                ></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

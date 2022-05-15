@@ -30,6 +30,14 @@ export class HeaderComponent implements OnInit {
       });
   }
 
+  goToProfile(){
+    if(this.currentUser.bId && this.currentUser.bId>0){
+    this.router.navigate(['/general/business-home/profile'], { queryParams: { bId: this.currentUser.bId } });
+    }else{
+    this.router.navigate(['/general/user'], { queryParams: { uId: this.currentUser.id } });
+    }
+  }
+
   logout(){
     this.businessSignupService.setCurrentUser(null);
     this.router.navigate(['/general/home']);

@@ -1,135 +1,120 @@
-import { ChangeDetectionStrategy, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import {
-  startOfDay,
-  endOfDay,
-  subDays,
-  addDays,
-  endOfMonth,
-  isSameDay,
-  isSameMonth,
-  addHours,
-} from 'date-fns';
-import { Subject } from 'rxjs';
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
+import { isSameDay, isSameMonth, addMinutes } from 'date-fns';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {
-  CalendarEvent,
-  CalendarEventAction,
-  CalendarEventTimesChangedEvent,
-  CalendarView,
-} from 'angular-calendar';
+import { CalendarEvent, CalendarView } from 'angular-calendar';
+import { ServiceListService } from 'src/app/shared/shared/services/service-list.service';
+import { StaffService } from 'src/app/shared/shared/services/staff.service';
+import { BusinessSignupService } from '../business-signup/business-signup-form/business-signup.service';
+import { AppointmentService } from 'src/app/shared/shared/services/appointment.service';
+import * as _ from 'lodash';
 
-const colors: any = {
-  red: {
-    primary: '#ad2121',
-    secondary: '#FAE3E3',
-  },
-  blue: {
-    primary: '#1e90ff',
-    secondary: '#D1E8FF',
-  },
-  yellow: {
-    primary: '#e3bc08',
-    secondary: '#FDF1BA',
-  },
+const red: any = {
+  primary: '#dc3646',
+  secondary: '#FAE3E3',
 };
-
 
 @Component({
   selector: 'app-business-calendar',
   templateUrl: './business-calendar.component.html',
-  // styleUrls: ['./business-calendar.component.scss'],
+  styleUrls: ['./business-calendar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styles: [
-    `
-      h3 {
-        margin: 0 0 10px;
-      }
-
-      pre {
-        background-color: #f5f5f5;
-        padding: 15px;
-      }
-    `,
-  ],
-
 })
 export class BusinessCalendarComponent implements OnInit {
-
-  constructor(private modal: NgbModal) {}
-
+  constructor(
+    private modal: NgbModal,
+    private serviceListService: ServiceListService,
+    private staffService: StaffService,
+    private businessSignupService: BusinessSignupService,
+    private appointmentService: AppointmentService
+  ) {}
 
   @ViewChild('modalContent', { static: true }) modalContent: TemplateRef<any>;
 
+  private loadingComplete: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
+  serviceList: any = [];
+  staffList: any = [];
+  subscription: any = null;
+  currentUser: any = null;
+
   view: CalendarView = CalendarView.Month;
-
   CalendarView = CalendarView;
-
   viewDate: Date = new Date();
-
-  modalData: {
-    action: string;
-    event: CalendarEvent;
-  };
-
-  actions: CalendarEventAction[] = [
-    {
-      label: '<i class="fas fas-pencil" aria-hidden="true"></i>',
-      a11yLabel: 'Edit',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.handleEvent('Edited', event);
-      },
-    },
-    {
-      label: '<i class="fas fas-trash ml-5" aria-hidden="true"></i>',
-      a11yLabel: 'Delete',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.events = this.events.filter((iEvent) => iEvent !== event);
-        this.handleEvent('Deleted', event);
-      },
-    },
-  ];
-
-  refresh = new Subject<void>();
-
-  events: CalendarEvent[] = [
-    {
-      start: addHours(startOfDay(new Date()), 9),
-      end: addHours(startOfDay(new Date()), 12),
-      title: 'Jack: Hair Spa',
-      color: colors.red,
-      actions: this.actions,
-      draggable: true,
-    },
-    {
-      start: addHours(startOfDay(new Date()), 8),
-      end: addHours(startOfDay(new Date()), 9),
-      title: 'Walt: Haircut',
-      color: colors.yellow,
-      actions: this.actions,
-    },
-    {
-      start: addHours(startOfDay(new Date()), 10),
-      end: addHours(startOfDay(new Date()), 14),
-      title: 'Hary: Haircut',
-      color: colors.yellow,
-      actions: this.actions,
-      // resizable: {
-      //   beforeStart: true,
-      //   afterEnd: true,
-      // },
-      // draggable: true,
-    },
-    {
-      start: addDays(new Date(), 1),
-      end: addHours(addDays(new Date(), 1), 1),
-      title: 'Jin: Haircut',
-      color: colors.yellow,
-      actions: this.actions,
-    },
-  ];
+  modalData: CalendarEvent;
+  refresh = new Subject<any>();
+  events: CalendarEvent[] = [];
 
   activeDayIsOpen: boolean = true;
 
+  ngOnInit(): void {
+    this.subscription = this.businessSignupService
+      .getCurrentUser()
+      .subscribe((value) => {
+        this.currentUser = value;
+      });
+    this.getServices();
+  }
+
+  getServices() {
+    this.loadingComplete.next(false);
+    this.serviceListService.getAll(this.currentUser.bId).subscribe((res) => {
+      this.serviceList = res;
+      this.getStaff();
+    });
+  }
+
+  getStaff() {
+    this.staffService.getAll(this.currentUser.bId).subscribe((res) => {
+      this.staffList = res;
+      this.getAllAppointments();
+    });
+  }
+
+  getAllAppointments() {
+    this.appointmentService
+      .getAllByBusinessId(this.currentUser.bId)
+      .subscribe((res) => {
+        this.addToCalendar(res);
+        this.loadingComplete.next(true);
+      });
+  }
+
+  addToCalendar(data = []) {
+    this.events = [];
+    const countMap = _.countBy(data, 'slotId');
+    const uniqApps = _.uniqBy(data, 'slotId');
+    console.log(countMap);
+    uniqApps.forEach((appointment: any) => {
+      const meta = {
+        serviceDetails: this.serviceList.filter(
+          (service: any) => service.id === appointment.serviceId
+        )[0],
+        staffDetails: this.staffList.filter(
+          (staffDetails: any) => staffDetails.id === appointment.staffId
+        )[0],
+        ...appointment,
+      };
+      const calEv = {
+        start: new Date(appointment.startDateTime),
+        end: addMinutes(
+          new Date(appointment.startDateTime),
+          countMap[appointment.slotId] * 30
+        ),
+        title: meta.serviceDetails.serviceName,
+        color: red,
+        meta: meta,
+      };
+      this.events.push(calEv);
+    });
+    console.log(this.events);
+  }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
@@ -145,48 +130,9 @@ export class BusinessCalendarComponent implements OnInit {
     }
   }
 
-  eventTimesChanged({
-    event,
-    newStart,
-    newEnd,
-  }: CalendarEventTimesChangedEvent): void {
-    this.events = this.events.map((iEvent) => {
-      if (iEvent === event) {
-        return {
-          ...event,
-          start: newStart,
-          end: newEnd,
-        };
-      }
-      return iEvent;
-    });
-    this.handleEvent('Dropped or resized', event);
-  }
-
-  handleEvent(action: string, event: CalendarEvent): void {
-    this.modalData = { event, action };
+  handleEvent(event: CalendarEvent): void {
+    this.modalData = event;
     this.modal.open(this.modalContent, { size: 'lg' });
-  }
-
-  addEvent(): void {
-    this.events = [
-      ...this.events,
-      {
-        title: 'New event',
-        start: startOfDay(new Date()),
-        end: endOfDay(new Date()),
-        color: colors.red,
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true,
-        },
-      },
-    ];
-  }
-
-  deleteEvent(eventToDelete: CalendarEvent) {
-    this.events = this.events.filter((event) => event !== eventToDelete);
   }
 
   setView(view: CalendarView) {
@@ -195,8 +141,22 @@ export class BusinessCalendarComponent implements OnInit {
 
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
-  } 
-  
-  ngOnInit(): void {
+  }
+
+  onCancelAppointment() {
+    this.appointmentService
+      .delete(this.modalData.meta.appId)
+      .subscribe((res) => {
+        this.modal.dismissAll();
+        this.getAllAppointments();
+      });
+  }
+
+  get load(): Observable<boolean> {
+    return this.loadingComplete;
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

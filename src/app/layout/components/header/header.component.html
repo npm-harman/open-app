@@ -5,7 +5,7 @@
     [routerLink]="
       currentUser && currentUser.bId
         ? ['/general/business-home/calendar']
-        : ['/general/home/']
+        : ['/general/home']
     "
   >
     <img
@@ -68,13 +68,8 @@
           <i class="fa fa-user" aria-hidden="true"></i>
         </button>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-          <button ngbDropdownItem>
-            <span
-              href="#"
-              [routerLink]="['/general/business-home/profile']"
-              [queryParams]="{ bId: currentUser.bId }"
-              >Profile</span
-            >
+          <button ngbDropdownItem (click)="goToProfile()">
+            <span>Profile</span>
           </button>
           <button ngbDropdownItem (click)="logout()">Logout</button>
         </div>

@@ -96,16 +96,17 @@
       <div class="form-group col-md-8 mt-3">
         <span class="d-flex flex-row-reverse">
           <button
-            [disabled]="signupForm.invalid"
+            [disabled]="signupForm.invalid || isLoading"
             type="submit"
             class="btn btn-outline-success"
           >
-            Register
+            Register {{isLoading? '...': null}}
           </button>
           <button
             type="button"
             class="btn btn-outline-danger mx-3"
             (click)="onCancel()"
+            [disabled]="isLoading"
           >
             Cancel
           </button>

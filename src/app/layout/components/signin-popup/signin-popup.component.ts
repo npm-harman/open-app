@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AppToastService } from 'src/app/utils/app-toast.service';
 import { BusinessSignupService } from '../../business-home/business-signup/business-signup-form/business-signup.service';
 
 @Component({
@@ -20,7 +21,8 @@ export class SigninPopupComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private businessSignupService: BusinessSignupService
+    private businessSignupService: BusinessSignupService,
+    private appToastService: AppToastService
   ) {}
 
   ngOnInit(): void {
@@ -41,15 +43,19 @@ export class SigninPopupComponent implements OnInit {
 
   onSubmit() {
     console.log(this.signinForm.value);
-    this.businessSignupService.signin(this.signinForm.value)
-    .subscribe(res=>{
-      this.businessSignupService.setCurrentUser(res);
-      localStorage.setItem('user', JSON.stringify(res));
-      if(res.bId && res.bId > 0){
-        this.router.navigate(['/general/business-home/calendar']);
-      }
-    this.modalService.dismissAll();
-    });
+    this.businessSignupService
+      .signin(this.signinForm.value)
+      .subscribe((res) => {
+        this.businessSignupService.setCurrentUser(res);
+        localStorage.setItem('user', JSON.stringify(res));
+        this.showSuccess();
+        if (res.bId && res.bId > 0) {
+          this.router.navigate(['/general/business-home/calendar'], {
+            queryParams: { bId: res.bId },
+          });
+        }
+        this.modalService.dismissAll();
+      });
   }
 
   open(content: any) {
@@ -74,5 +80,13 @@ export class SigninPopupComponent implements OnInit {
     } else {
       return `with: ${reason}`;
     }
+  }
+
+  showSuccess() {
+    this.appToastService.show({
+      message: 'Sign in successful!',
+      class: 'bg-success text-light',
+      delay: 10000,
+    });
   }
 }

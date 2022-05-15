@@ -1,0 +1,17 @@
+<div class="p-3">
+  <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+    <li [ngbNavItem]="1">
+      <a ngbNavLink>Upcoming Appointments</a>
+      <ng-template ngbNavContent>
+        <app-appointment-list [isBusiness]="false" [id]="uId"></app-appointment-list>
+      </ng-template>
+    </li>
+    <li [ngbNavItem]="2">
+      <a ngbNavLink>Staff</a>
+      <ng-template ngbNavContent>
+        <!-- <app-staff-list [allowEdit]="true"></app-staff-list> -->
+      </ng-template>
+    </li>
+  </ul>
+  <div [ngbNavOutlet]="nav" class="mt-2"></div>
+</div>

@@ -38,6 +38,7 @@ export class BusinessGeneralComponent implements OnInit {
 
   getDetails(){
     this.isLoading = true;
+    this.images = [];
     this.homeService.getBusinessById(this.bId)
     .subscribe(res=>{
       this.details = res;
@@ -88,6 +89,9 @@ export class BusinessGeneralComponent implements OnInit {
   update() {
     this.homeService.updateBusiness(this.details).subscribe((res) => {
       console.log(res);
+      this.getDetails();
+      this.showForm = false;
+      this.files = [];
     });
   }
 

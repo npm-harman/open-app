@@ -1,0 +1,14 @@
+<div class="container border border-danger rounded" *ngIf="!isLoading">
+    <div class="col" *ngFor="let item of appointmentList">
+        <div class="border rounded border-white">
+          <app-appointment-list-item
+            [details]="item"
+          ></app-appointment-list-item>
+        </div>
+      </div>
+</div>
+<div class="text-center" *ngIf="isLoading">
+  <div class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
