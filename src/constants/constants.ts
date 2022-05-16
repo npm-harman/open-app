@@ -1,0 +1,1 @@
+export const categories = ['Auto Shop', 'Beauty Salon'];

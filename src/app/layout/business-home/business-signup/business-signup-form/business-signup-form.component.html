@@ -88,9 +88,8 @@
       <div class="form-group col-md-4">
         <label for="inputState">Business Category<em>*</em></label>
         <select id="inputCategory" class="form-control" formControlName="bType">
-          <option selected>Choose...</option>
-          <option>Auto Shop</option>
-          <option>Beauty Salon</option>
+          <option [value]="null" disabled>select category</option>
+          <option *ngFor="let x of categories" [ngValue]="x">{{ x }}</option>
         </select>
       </div>
       <div class="form-group col-md-8 mt-3">

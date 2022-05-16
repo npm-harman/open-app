@@ -90,7 +90,6 @@ export class BusinessCalendarComponent implements OnInit {
     this.events = [];
     const countMap = _.countBy(data, 'slotId');
     const uniqApps = _.uniqBy(data, 'slotId');
-    console.log(countMap);
     uniqApps.forEach((appointment: any) => {
       const meta = {
         serviceDetails: this.serviceList.filter(

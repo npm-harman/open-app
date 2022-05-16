@@ -5,34 +5,36 @@
   <div
     class="text-black d-flex align-items-center justify-content-center h-100"
   >
-    <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
-      <div class="row align-items-start">
-        <div class="form-group col-2">
+    <form [formGroup]="searchForm">
+      <div class="row">
+        <div class="form-group col-3">
           <select
             placeholder="Category"
             class="form-control form-select"
             formControlName="category"
+            (change)="onSelectCategoryOrCity()"
           >
-            <option value="null" selected>Category</option>
+            <option [value]="null" disabled>select category</option>
             <option *ngFor="let x of categories" [ngValue]="x">{{ x }}</option>
           </select>
         </div>
+        
         <div class="form-group col-3">
-          <input formControlName="date" class="form-control" type="date" />
-        </div>
-        <div class="form-group col-2">
-          <input formControlName="date" class="form-control" type="time" />
+          <input formControlName="date" class="form-control" type="date" (change)="onSelectDate()"/>
         </div>
         <div class="form-group col-3">
-          <input
-            formControlName="location"
-            placeholder="location"
-            class="form-control"
-            type="text"
-          />
+          <select
+            placeholder="Category"
+            class="form-control form-select"
+            formControlName="city"
+            (change)="onSelectCategoryOrCity()"
+          >
+            <option value=null disabled>select city</option>
+            <option *ngFor="let x of cities" [ngValue]="x.bCity">{{ x.bCity }}</option>
+          </select>
         </div>
-        <div class="form-group col-2">
-          <button class="btn btn btn-danger" type="submit">Search</button>
+        <div class="form-group col-3">
+          <button class="btn btn btn-danger" type="button" (click)="onClear()">Clear</button>
         </div>
       </div>
     </form>

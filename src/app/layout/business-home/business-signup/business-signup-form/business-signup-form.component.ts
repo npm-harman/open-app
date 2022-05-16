@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { categories } from 'src/constants/constants';
 import { BusinessSignupService } from './business-signup.service';
 
 @Component({
@@ -13,6 +14,7 @@ export class BusinessSignupFormComponent implements OnInit {
   formSubmitted = false;
   emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,12}$/;
   isLoading = false;
+  categories = categories;
 
   constructor(
     private fb: FormBuilder,

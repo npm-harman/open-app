@@ -8,7 +8,6 @@ import { ServiceListService } from 'src/app/shared/shared/services/service-list.
 import { StaffService } from 'src/app/shared/shared/services/staff.service';
 import { AppToastService } from 'src/app/utils/app-toast.service';
 import {
-  adList,
   staffScreening,
   cleaningAndSanitization,
 } from 'src/constants/ad-list';
@@ -21,7 +20,6 @@ import { BusinessSignupService } from '../../business-home/business-signup/busin
 })
 export class AdDetailsComponent implements OnInit {
   bId: Number;
-  adList = adList;
   staffScreening = staffScreening;
   cleaningAndSanitization = cleaningAndSanitization;
   details: any = null;
