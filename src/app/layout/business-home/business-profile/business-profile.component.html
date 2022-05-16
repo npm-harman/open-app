@@ -25,9 +25,15 @@
       </ng-template>
     </li>
     <li [ngbNavItem]="5">
-      <a ngbNavLink>Location & Contact</a>
+      <a ngbNavLink>Location</a>
       <ng-template ngbNavContent>
         <app-business-contact [allowEdit]="true" [bId]="bId"></app-business-contact>
+      </ng-template>
+    </li>
+    <li [ngbNavItem]="6">
+      <a ngbNavLink>Security</a>
+      <ng-template ngbNavContent>
+        <app-security></app-security>
       </ng-template>
     </li>
   </ul>

@@ -15,6 +15,7 @@ import { BusinessContactComponent } from './business-contact/business-contact.co
 import { HourMinPipe } from './pipes/hour-min.pipe';
 import { AppointmentListComponent } from './appointment-list/appointment-list.component';
 import { AppointmentListItemComponent } from './appointment-list-item/appointment-list-item.component';
+import { SecurityComponent } from './security/security.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { AppointmentListItemComponent } from './appointment-list-item/appointmen
     HourMinPipe,
     AppointmentListComponent,
     AppointmentListItemComponent,
+    SecurityComponent,
   ],
   imports: [
     CommonModule,
@@ -55,7 +57,8 @@ import { AppointmentListItemComponent } from './appointment-list-item/appointmen
     CommonModule,
     HourMinPipe,
     AppointmentListComponent,
-    AppointmentListItemComponent
+    AppointmentListItemComponent,
+    SecurityComponent,
   ]
 })
 export class SharedModule { }

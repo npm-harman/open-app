@@ -1,0 +1,33 @@
+<div class="modal-body">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row mb-3">
+      <div class="form-group col-md-12">
+        <label for="inputEmail">New Password<em>*</em></label>
+        <input
+          type="password"
+          class="form-control"
+          id="inputPassword"
+          formControlName="password"
+        />
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="form-group col-md-12">
+        <label for="inputPassword">Confirm Password<em>*</em></label>
+        <input
+          type="password"
+          class="form-control"
+          id="inputConfirmPassword"
+          formControlName="confirmPassword"
+        />
+      </div>
+    </div>
+
+    <span class="text-danger" *ngIf="!isPasswordMatching()">Passwords do not match!</span>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-danger" (click)="onCancel()">Cancel</button>
+      <button type="submit" [disabled]="form.invalid || !isPasswordMatching()" class="btn btn-outline-success">Submit</button>
+    </div>
+  </form>
+</div>

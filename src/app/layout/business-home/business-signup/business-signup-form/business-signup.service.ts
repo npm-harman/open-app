@@ -10,6 +10,7 @@ export class BusinessSignupService {
 
   registerBusiness: (data: any) => Observable<any>;
   signin: (data: any) => Observable<any>;
+  changePassword: (data: any, id: Number) => Observable<any>;
 
   constructor(
     @Inject('IWebRequest') private webRequest: IWebRequest,
@@ -27,6 +28,14 @@ export class BusinessSignupService {
         data
       );
     };
+
+    this.changePassword = (data, id) => {
+      return webRequest.patch<any>(
+        this.config.getParams().customRestEndPoint + 'users/' + id,
+        data
+      );
+    };
+
     this.currentUser = new BehaviorSubject<any>(null);
   }
 

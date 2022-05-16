@@ -7,6 +7,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
+import { HomeService } from '../services/home.service';
 
 @Component({
   selector: 'app-business-contact',
@@ -26,36 +27,52 @@ export class BusinessContactComponent implements OnInit {
   address: string;
   geoCoder: any;
   showForm: any = false;
-  contact: any = 7168173395;
+  details: any = null;
+  isLoading = false;
 
-
-  constructor(private mapsAPILoader: MapsAPILoader, private ngZone: NgZone) {}
+  constructor(
+    private mapsAPILoader: MapsAPILoader,
+    private ngZone: NgZone,
+    private homeService: HomeService
+  ) {}
 
   ngOnInit() {
-    //load Places Autocomplete
-    this.mapsAPILoader.load().then(() => {
-      this.setCurrentLocation();
-      this.geoCoder = new google.maps.Geocoder();
+    this.getDetails();
+  }
 
+  initMap() {
+    this.mapsAPILoader.load().then(() => {
+      this.geoCoder = new google.maps.Geocoder();
       let autocomplete = new google.maps.places.Autocomplete(
         this.searchElementRef.nativeElement
       );
+      if (this.details.lat) {
+        this.latitude = Number(this.details.lat);
+        this.longitude = Number(this.details.long);
+        this.getAddress(this.latitude, this.longitude);
+      } else if (this.allowEdit) {
+        this.setCurrentLocation();
+      }
       autocomplete.addListener('place_changed', () => {
         this.ngZone.run(() => {
-          //get the place result
           let place: google.maps.places.PlaceResult = autocomplete.getPlace();
-
-          //verify result
           if (place.geometry === undefined || place.geometry === null) {
             return;
           }
-
-          //set latitude, longitude and zoom
           this.latitude = place.geometry.location.lat();
           this.longitude = place.geometry.location.lng();
           this.getAddress(this.latitude, this.longitude);
         });
       });
+      this.isLoading = false;
+    });
+  }
+
+  getDetails() {
+    this.isLoading = true;
+    this.homeService.getBusinessById(this.bId).subscribe((res) => {
+      this.details = res;
+      this.initMap();
     });
   }
 
@@ -87,8 +104,6 @@ export class BusinessContactComponent implements OnInit {
     this.geoCoder.geocode(
       { location: { lat: latitude, lng: longitude } },
       (results: any, status: any) => {
-        console.log(results);
-        console.log(status);
         if (status === 'OK') {
           if (results[0]) {
             this.zoom = 15;
@@ -108,7 +123,12 @@ export class BusinessContactComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.latitude + " "+ this.longitude);
+    this.details.lat = this.latitude;
+    this.details.long = this.longitude;
+    this.homeService.updateBusiness(this.details).subscribe((res) => {
+      this.showForm=false;
+      this.getDetails();
+    });
   }
 
   onCancel() {
