@@ -1,28 +1,35 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpParams, HttpRequest } from '@angular/common/http';
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { exhaustMap, Observable, take } from 'rxjs';
-import { AuthService } from './auth.service';
+import { catchError, map, Observable, throwError } from 'rxjs';
+import { AppToastService } from 'src/app/utils/app-toast.service';
 
 @Injectable()
 export class AuthInterceptorService implements HttpInterceptor {
 
   user = JSON.parse(localStorage.getItem('user') || '[]');
 
-  constructor(private authService: AuthService) { }
+  constructor(private appToastService: AppToastService) { }
   
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return this.authService.user.pipe(
-      take(1), // to auto unsubscribe after accessing the value once
-      exhaustMap(user=>{ // used to merge observables
-        // if(!user){
-        //   return next.handle(req);
-        // }
         const modifiedReq = req.clone({  
           setHeaders: {
           Authorization: `Bearer ${this.user.token}`
         }});
-        return next.handle(modifiedReq);
-      })
-    )
+        return next.handle(modifiedReq).pipe(
+          map((event: HttpEvent<any>) => {
+            return event;
+        }),
+        catchError((error: HttpErrorResponse) => {
+            this.showError(error.error.message);
+            return throwError(error);
+        }))
+      }
+
+      showError(errorMsg: any) {
+        this.appToastService.show({
+          message: errorMsg,
+          class: 'bg-danger text-light',
+          delay: 10000,
+        });
+      }
   }
-}
