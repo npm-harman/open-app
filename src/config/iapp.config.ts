@@ -7,6 +7,7 @@ export interface IAppParams {
 export interface IApplConfig {
   production: boolean;
   customRestEndPoint: string;
+  assetsEndPoint: string;
 }
 
 export interface IWebRequest {
