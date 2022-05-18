@@ -2,12 +2,12 @@
   <div class="mx-3">
     <ngb-carousel *ngIf="images">
       <ng-template *ngFor="let img of images" ngbSlide>
-        <div class="picsum-img-wrapper" *ngIf="img.length">
+        <div class="picsum-img-wrapper">
           <img
             style="height: 300px; max-width: 80%"
-            [src]="imageEndpoint + img"
+            [src]="img.length>0? imageEndpoint + img: '/assets/businessBack2.jpg'"
             alt="Random first slide"
-            onerror="this.src='/assets/openApp.png'"
+            onerror="this.src='/assets/businessBack2.jpg'"
           />
         </div>
         <div class="carousel-caption"></div>
