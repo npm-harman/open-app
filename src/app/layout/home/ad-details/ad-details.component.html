@@ -4,7 +4,7 @@
       <ng-template *ngFor="let img of images" ngbSlide>
         <div class="picsum-img-wrapper">
           <img
-            style="height: 300px; max-width: 80%"
+            style="height: 300px; width: 100%;"
             [src]="img.length>0? imageEndpoint + img: '/assets/businessBack2.jpg'"
             alt="Random first slide"
             onerror="this.src='/assets/businessBack2.jpg'"
@@ -87,7 +87,7 @@
           </ng-template>
         </li>
         <li [ngbNavItem]="5">
-          <a ngbNavLink>Location & Contact</a>
+          <a ngbNavLink>Location</a>
           <ng-template ngbNavContent>
             <app-business-contact
               [allowEdit]="false"
@@ -174,7 +174,7 @@
           </div>
         </div>
 
-        <div class="row mb-3 mt-5">
+        <div class="row">
           <button
             type="submit"
             class="mx-auto col-md-8 btn btn-outline-success"
