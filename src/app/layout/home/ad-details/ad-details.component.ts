@@ -123,6 +123,7 @@ export class AdDetailsComponent implements OnInit {
     this.isLoading = true;
     let formData = this.appointmentForm.value;
     formData.uId = this.currentUser.id;
+    formData.bId = this.bId;
     formData.startDateTime = formData.startDateTime.time;
     this.appointmentService
       .bookAppointment(this.appointmentForm.value)

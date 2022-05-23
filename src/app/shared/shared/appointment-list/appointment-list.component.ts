@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AppointmentService } from '../services/appointment.service';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-appointment-list',
@@ -10,7 +11,7 @@ export class AppointmentListComponent implements OnInit {
   @Input() isBusiness: boolean;
   @Input() id: Number;
 
-  appointmentList = [];
+  appointmentList: any = [];
   isLoading: boolean = false;
   subscription: any;
 
@@ -24,15 +25,20 @@ export class AppointmentListComponent implements OnInit {
     this.isLoading = true;
     if (this.isBusiness) {
       this.appointmentService.getAllByBusinessId(this.id).subscribe((res) => {
-        this.appointmentList = res;
-        this.isLoading = false;
+        this.loadAppointments(res);
+
       });
     } else {
       this.appointmentService.getAllByUserId(this.id).subscribe((res) => {
-        this.appointmentList = res;
-        this.isLoading = false;
+        this.loadAppointments(res);
       });
     }
+  }
+
+  loadAppointments(data: any){
+    const uniqApps = _.uniqBy(data, 'slotId');
+    this.appointmentList = uniqApps;
+    this.isLoading = false;
   }
 
   ngOnDestroy() {

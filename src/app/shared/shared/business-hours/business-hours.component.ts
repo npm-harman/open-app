@@ -127,6 +127,6 @@ export class BusinessHoursComponent implements OnInit {
   }
 
   onCancel() {
-    this.businessHoursForm.disable();
+    this.getHours();
   }
 }
