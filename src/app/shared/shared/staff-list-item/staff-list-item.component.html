@@ -45,8 +45,8 @@
               alt="Instagram"
               style="max-height: 40px; cursor: pointer"
               src="/assets/ig_icon.webp"
-              class="mb-2"
-          /></a><br/>
+              class="mb-2" /></a
+          ><br />
           <a
             [href]="'https://www.facebook.com/' + staffDetails.fbProfile"
             target="_blank"
@@ -54,8 +54,8 @@
               src="/assets/fb_logo.png"
               alt="facebook"
               style="max-height: 40px; cursor: pointer"
-              class="mb-2"
-          /></a><br/>
+              class="mb-2" /></a
+          ><br />
           <a
             [href]="'https://www.tiktok.com/@' + staffDetails.tiktokProfile"
             target="_blank"
@@ -158,8 +158,18 @@
     <div class="row">
       <div class="form-group col-md-12 mb-1">
         <div class="d-flex flex-row-reverse">
-          <button type="submit" class="btn btn-outline-success">Save</button>
-          <button type="button" class="btn btn-outline-danger mx-3" (click)="onCancel()">
+          <button
+            type="submit"
+            [disabled]="staffMemberForm.invalid"
+            class="btn btn-outline-success"
+          >
+            Save
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-danger mx-3"
+            (click)="onCancel()"
+          >
             Cancel
           </button>
         </div>

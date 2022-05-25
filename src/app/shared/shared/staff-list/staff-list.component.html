@@ -3,7 +3,7 @@
     <span class="d-flex justify-content-between">
       <strong>Staff Details</strong>
       <button
-      *ngIf="allowEdit"
+        *ngIf="allowEdit"
         type="button"
         class="btn btn-outline-secondary my-2 my-sm-0 ml-2"
         (click)="onAddStaffMember()"
@@ -103,7 +103,13 @@
       <div class="row mt-2">
         <div class="form-group col-md-12">
           <div class="d-flex flex-row-reverse">
-            <button type="submit" class="btn btn-outline-success">Save</button>
+            <button
+              type="submit"
+              [disabled]="staffMemberForm.invalid"
+              class="btn btn-outline-success"
+            >
+              Save
+            </button>
             <button
               type="button"
               class="btn btn-outline-danger mx-3"
@@ -118,7 +124,10 @@
     <hr />
     <div class="col" *ngFor="let staff of staffList">
       <div class="border rounded border-white">
-        <app-staff-list-item [allowEdit]="allowEdit" [staffDetails]="staff"></app-staff-list-item>
+        <app-staff-list-item
+          [allowEdit]="allowEdit"
+          [staffDetails]="staff"
+        ></app-staff-list-item>
       </div>
     </div>
   </div>

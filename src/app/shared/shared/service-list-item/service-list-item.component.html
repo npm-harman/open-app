@@ -58,13 +58,18 @@
       </div>
       <div class="form-group col-md-3">
         <label for="inputEmail">Time</label>
-        <input
+        <select
           type="number"
           class="form-control"
           id="inputName"
           formControlName="time"
           placeholder="Time (mins)"
-        />
+        >
+          <option [value]="null" disabled>select Time(mins)</option>
+          <option *ngFor="let x of [30, 60, 90, 120, 150, 180]" [ngValue]="x">
+            {{ x }}
+          </option>
+        </select>
       </div>
       <div class="form-group col-md-3">
         <label for="inputEmail">Price</label>
@@ -99,7 +104,7 @@
       </div>
       <div class="form-group col-md-6 mt-5">
         <span class="d-flex flex-row-reverse">
-          <button type="submit" class="btn btn-outline-success">Save</button>
+          <button type="submit" [disabled]="serviceForm.invalid" class="btn btn-outline-success">Save</button>
           <button
             type="button"
             class="btn btn-outline-danger mx-3"

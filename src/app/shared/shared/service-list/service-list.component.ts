@@ -37,7 +37,7 @@ export class ServiceListComponent implements OnInit {
       serviceName: [null, Validators.required],
       picture: null,
       desc: null,
-      time: null,
+      time: [null, Validators.required],
       cost: null,
       bId: this.bId
     });
