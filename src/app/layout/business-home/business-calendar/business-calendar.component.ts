@@ -106,7 +106,7 @@ export class BusinessCalendarComponent implements OnInit {
           new Date(appointment.startDateTime),
           countMap[appointment.slotId] * 30
         ),
-        title: meta.serviceDetails.serviceName,
+        title: meta.serviceDetails.serviceName + ' : '+ meta.firstName,
         color: red,
         meta: meta,
       };

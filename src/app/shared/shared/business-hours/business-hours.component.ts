@@ -60,11 +60,11 @@ export class BusinessHoursComponent implements OnInit {
           day: new FormControl({ value: dayData.day, disabled: true }),
           isWorking: new FormControl(dayData.isWorking),
           startTime: new FormControl({
-            value: dayData.startTime,
+            value: dayData.isWorking? dayData.startTime: null,
             disabled: true,
           }),
           endTime: new FormControl({
-            value: dayData.endTime,
+            value: dayData.isWorking? dayData.endTime: null,
             disabled: true,
           }),
         })
