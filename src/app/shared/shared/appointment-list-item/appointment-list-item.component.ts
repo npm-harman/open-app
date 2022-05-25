@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { environment } from '@environment';
 import { AppointmentService } from '../services/appointment.service';
 import { HomeService } from '../services/home.service';
@@ -29,7 +30,8 @@ export class AppointmentListItemComponent implements OnInit {
     private serviceListService: ServiceListService,
     private homeService: HomeService,
     private staffService: StaffService,
-    private appointmentService: AppointmentService
+    private appointmentService: AppointmentService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -42,6 +44,10 @@ export class AppointmentListItemComponent implements OnInit {
       this.businessDetails = res;
       this.getServiceById();
     });
+  }
+
+  goToBusiness(){
+    this.router.navigate(['/general/ad-details'], { queryParams: { bId: this.businessDetails.bId } });
   }
 
   getServiceById() {

@@ -17,9 +17,9 @@
             {{ details.startDateTime | date: "medium" }}
           </p>
           <span
-            ><span class="font-weight-bold">{{ businessDetails.bName }}</span>
+            ><span class="font-weight-bold text-danger" style="cursor: pointer;" (click)="goToBusiness()">{{ businessDetails.bName }}</span>
             at
-            <span class="text-danger clickable"
+            <span class="font-weight-bold"
               >{{ businessDetails.bCity }}, {{ businessDetails.bState }}</span
             ></span
           >
